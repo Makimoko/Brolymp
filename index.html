@@ -1,12 +1,935 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bro'lymp 🏆</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap');
+
+  :root {
+    --gold: #F5C842;
+    --gold-dark: #C9961A;
+    --bg: #0A0A0F;
+    --bg2: #13131C;
+    --bg3: #1C1C2A;
+    --border: rgba(255,255,255,0.08);
+    --text: #F0EEF8;
+    --muted: #888;
+    --accent: #7B5CF0;
+    --accent2: #C26DFF;
+    --red: #FF4D6D;
+    --green: #3DDC97;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3rem 1rem 2rem;
+    background: linear-gradient(180deg, #1a0a2e 0%, var(--bg) 100%);
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(123,92,240,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .belt-logo {
+    font-size: 5rem;
+    line-height: 1;
+    filter: drop-shadow(0 0 24px var(--gold));
+    animation: glow 2.5s ease-in-out infinite alternate;
+  }
+  @keyframes glow {
+    from { filter: drop-shadow(0 0 16px var(--gold)); }
+    to   { filter: drop-shadow(0 0 36px var(--gold)) drop-shadow(0 0 60px rgba(245,200,66,0.4)); }
+  }
+  header h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.5rem, 10vw, 6rem);
+    letter-spacing: 0.06em;
+    color: var(--gold);
+    text-shadow: 0 0 40px rgba(245,200,66,0.5);
+    margin-top: 0.5rem;
+    line-height: 1;
+  }
+  header .subtitle {
+    font-size: 0.85rem;
+    color: var(--muted);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-top: 0.4rem;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,10,15,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: center;
+    gap: 0.25rem;
+    padding: 0.6rem 1rem;
+    flex-wrap: wrap;
+  }
+  nav a {
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.45rem 1rem;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+  }
+  nav a:hover { color: var(--text); border-color: var(--border); background: var(--bg3); }
+  nav a.active { color: var(--gold); border-color: rgba(245,200,66,0.3); background: rgba(245,200,66,0.08); }
+
+  /* ── GLOBAL SCOREBOARD ── */
+  #global {
+    max-width: 780px;
+    margin: 3rem auto 0;
+    padding: 0 1rem;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    letter-spacing: 0.08em;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .scoreboard-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.75rem;
+  }
+  .player-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.25rem 0.75rem;
+    text-align: center;
+    transition: transform 0.2s, border-color 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .player-card.rank-1 { border-color: var(--gold); box-shadow: 0 0 20px rgba(245,200,66,0.15); }
+  .player-card.rank-2 { border-color: #C0C0C0; }
+  .player-card.rank-3 { border-color: #CD7F32; }
+  .player-card .rank-crown {
+    position: absolute; top: 6px; right: 8px;
+    font-size: 1rem;
+  }
+  .player-emoji { font-size: 2.4rem; line-height: 1; margin-bottom: 0.4rem; display: block; }
+  .player-name {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .player-total {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.8rem;
+    line-height: 1;
+    color: var(--text);
+    margin-top: 0.2rem;
+  }
+  .player-card.rank-1 .player-total { color: var(--gold); }
+
+  /* ── SECTIONS ── */
+  .event-section {
+    max-width: 900px;
+    margin: 4rem auto 0;
+    padding: 0 1rem;
+  }
+  .event-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .event-icon { font-size: 2.2rem; }
+  .event-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 0.06em;
+    color: var(--text);
+  }
+  .event-subtitle { font-size: 0.78rem; color: var(--muted); margin-top: 0.1rem; }
+  .points-badge {
+    margin-left: auto;
+    background: rgba(245,200,66,0.1);
+    border: 1px solid rgba(245,200,66,0.3);
+    color: var(--gold);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.8rem;
+    border-radius: 999px;
+  }
+
+  /* ── TABLES ── */
+  table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+  thead th {
+    padding: 0.7rem 1rem;
+    text-align: left;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+  }
+  thead th:not(:first-child) { text-align: center; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  tbody tr:hover { background: rgba(255,255,255,0.03); }
+  tbody td { padding: 0.75rem 1rem; }
+  tbody td:not(:first-child) { text-align: center; }
+  .player-cell { display: flex; align-items: center; gap: 0.5rem; font-weight: 600; }
+
+  /* ── INPUTS ── */
+  input[type="number"], input[type="text"], select {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 8px;
+    padding: 0.4rem 0.6rem;
+    font-size: 0.9rem;
+    font-family: 'Inter', sans-serif;
+    text-align: center;
+    width: 70px;
+    transition: border-color 0.2s;
+  }
+  input[type="number"]:focus, input[type="text"]:focus, select:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+  input[type="number"]::-webkit-inner-spin-button { opacity: 0.5; }
+
+  /* ── BUTTONS ── */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 0.6rem 1.4rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    font-family: 'Inter', sans-serif;
+  }
+  .btn:hover { background: var(--accent2); }
+  .btn:active { transform: scale(0.97); }
+  .btn-gold {
+    background: var(--gold);
+    color: #1a1000;
+  }
+  .btn-gold:hover { background: var(--gold-dark); color: #fff; }
+
+  /* ── RESULT ROW ── */
+  .result-row td { background: rgba(245,200,66,0.05); font-weight: 600; }
+  .pts-chip {
+    display: inline-block;
+    background: rgba(245,200,66,0.15);
+    color: var(--gold);
+    border-radius: 999px;
+    padding: 0.15rem 0.6rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+  }
+  .pts-chip.winner { background: rgba(245,200,66,0.3); font-size: 0.9rem; }
+
+  /* ── CARD CONTAINER ── */
+  .card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .card-title {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+
+  /* ── RATING STARS ── */
+  .rating-input { display: flex; gap: 4px; justify-content: center; }
+  .rating-input input[type="number"] { width: 55px; }
+
+  /* ── PING PONG BRACKET ── */
+  .match-row {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .match-row:last-child { border-bottom: none; }
+  .match-player { display: flex; align-items: center; gap: 0.4rem; font-weight: 600; font-size: 0.9rem; }
+  .match-player.right { justify-content: flex-end; }
+  .match-vs { color: var(--muted); font-size: 0.8rem; font-weight: 700; }
+  .match-score { display: flex; align-items: center; gap: 0.4rem; justify-content: center; }
+  .match-score input { width: 55px; }
+
+  /* ── FOOTER SPACER ── */
+  footer { height: 6rem; }
+
+  /* ── SEPARATOR ── */
+  .sep {
+    max-width: 900px;
+    margin: 4rem auto 0;
+    border: none;
+    border-top: 1px solid var(--border);
+  }
+
+  /* ── POPUP ── */
+  .popup-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    backdrop-filter: blur(6px);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+  }
+  .popup-overlay.show { display: flex; }
+  .popup {
+    background: var(--bg2);
+    border: 1px solid var(--gold);
+    border-radius: 24px;
+    padding: 2.5rem;
+    max-width: 480px;
+    width: 90%;
+    text-align: center;
+    animation: popIn 0.4s cubic-bezier(.175,.885,.32,1.275) both;
+    box-shadow: 0 0 60px rgba(245,200,66,0.2);
+  }
+  @keyframes popIn {
+    from { transform: scale(0.7); opacity: 0; }
+    to   { transform: scale(1); opacity: 1; }
+  }
+  .popup h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem;
+    color: var(--gold);
+    letter-spacing: 0.08em;
+    margin: 0.5rem 0 1.5rem;
+  }
+  .podium { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 2rem; }
+  .podium-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.9rem 1.2rem;
+    border-radius: 12px;
+    font-weight: 700;
+  }
+  .podium-item.p1 { background: rgba(245,200,66,0.12); border: 1px solid rgba(245,200,66,0.4); }
+  .podium-item.p2 { background: rgba(192,192,192,0.08); border: 1px solid rgba(192,192,192,0.3); }
+  .podium-item.p3 { background: rgba(205,127,50,0.08); border: 1px solid rgba(205,127,50,0.3); }
+  .podium-medal { font-size: 1.6rem; }
+  .podium-emoji { font-size: 1.6rem; }
+  .podium-name { flex: 1; text-align: left; font-size: 1.1rem; }
+  .podium-pts { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; color: var(--gold); }
+
+  @media (max-width: 600px) {
+    .scoreboard-grid { grid-template-columns: repeat(3, 1fr); }
+    .match-row { grid-template-columns: 1fr auto 1fr; }
+    .match-row .match-score { grid-column: 1 / -1; justify-content: center; }
+  }
+</style>
 </head>
 <body>
+
+<!-- HEADER -->
+<header>
+  <div class="belt-logo">🥋</div>
+  <h1>Bro'lymp</h1>
+  <p class="subtitle">Les Olympiades entre frères</p>
+</header>
+
+<!-- NAV -->
+<nav>
+  <a href="#global" class="active">🏆 Classement</a>
+  <a href="#board-games">🎲 Jeux de société</a>
+  <a href="#cooking">🍳 Cuisine</a>
+  <a href="#darts">🎯 Fléchettes</a>
+  <a href="#pingpong">🏓 Ping Pong</a>
+  <a href="#prez">🎤 La Prez</a>
+</nav>
+
+<!-- ═══════════════════════════════════════ -->
+<!--           GLOBAL SCOREBOARD            -->
+<!-- ═══════════════════════════════════════ -->
+<section id="global">
+  <div class="section-title">🏆 Classement général</div>
+  <div class="scoreboard-grid" id="globalScoreboard"></div>
+</section>
+
+<hr class="sep">
+
+<!-- ═══════════════════════════════════════ -->
+<!--            JEUX DE SOCIÉTÉ             -->
+<!-- ═══════════════════════════════════════ -->
+<section class="event-section" id="board-games">
+  <div class="event-header">
+    <span class="event-icon">🎲</span>
+    <div>
+      <div class="event-title">Jeux de société</div>
+      <div class="event-subtitle">Rentrez l'ordre d'arrivée</div>
+    </div>
+    <span class="points-badge">5–4–3–2–1 pts</span>
+  </div>
+  <div class="card">
+    <div class="card-title">Ordre d'arrivée (1 = premier)</div>
+    <table>
+      <thead><tr>
+        <th>Joueur</th>
+        <th>Position</th>
+      </tr></thead>
+      <tbody id="boardBody"></tbody>
+    </table>
+    <br>
+    <button class="btn btn-gold" onclick="calcBoardGames()">✓ Valider les résultats</button>
+  </div>
+  <div class="card" id="boardResult" style="display:none">
+    <div class="card-title">Résultat</div>
+    <table><thead><tr><th>Joueur</th><th>Position</th><th>Points Olympiades</th></tr></thead>
+    <tbody id="boardResultBody"></tbody></table>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- ═══════════════════════════════════════ -->
+<!--               CUISINE                  -->
+<!-- ═══════════════════════════════════════ -->
+<section class="event-section" id="cooking">
+  <div class="event-header">
+    <span class="event-icon">🍳</span>
+    <div>
+      <div class="event-title">Cuisine</div>
+      <div class="event-subtitle">Chaque joueur note les autres sur Goût et Présentation (0–5)</div>
+    </div>
+    <span class="points-badge">5–4–3–2–1 pts</span>
+  </div>
+  <div class="card">
+    <div class="card-title">Notes des jurés — Goût /5 &amp; Présentation /5</div>
+    <div id="cookingJuryTable"></div>
+    <br>
+    <button class="btn btn-gold" onclick="calcCooking()">✓ Calculer les moyennes</button>
+  </div>
+  <div class="card" id="cookingResult" style="display:none">
+    <div class="card-title">Résultat — Moyennes</div>
+    <table><thead><tr><th>Chef</th><th>Moy. Goût</th><th>Moy. Présentation</th><th>Moyenne Totale</th><th>Points Olympiades</th></tr></thead>
+    <tbody id="cookingResultBody"></tbody></table>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- ═══════════════════════════════════════ -->
+<!--               FLÉCHETTES               -->
+<!-- ═══════════════════════════════════════ -->
+<section class="event-section" id="darts">
+  <div class="event-header">
+    <span class="event-icon">🎯</span>
+    <div>
+      <div class="event-title">Fléchettes</div>
+      <div class="event-subtitle">Chaque joueur lance 3 fléchettes par manche — total sur 3 manches</div>
+    </div>
+    <span class="points-badge">5–4–3–2–1 pts</span>
+  </div>
+  <div class="card">
+    <div class="card-title">Scores — Bullseye 50 pts, anneau rouge 25 pts, verts 20/15/10/5 pts</div>
+    <table>
+      <thead><tr><th>Joueur</th><th>Manche 1</th><th>Manche 2</th><th>Manche 3</th><th>Total</th></tr></thead>
+      <tbody id="dartsBody"></tbody>
+    </table>
+    <br>
+    <button class="btn btn-gold" onclick="calcDarts()">✓ Valider les scores</button>
+  </div>
+  <div class="card" id="dartsResult" style="display:none">
+    <div class="card-title">Résultat</div>
+    <table><thead><tr><th>Joueur</th><th>Total</th><th>Points Olympiades</th></tr></thead>
+    <tbody id="dartsResultBody"></tbody></table>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- ═══════════════════════════════════════ -->
+<!--              PING PONG                 -->
+<!-- ═══════════════════════════════════════ -->
+<section class="event-section" id="pingpong">
+  <div class="event-header">
+    <span class="event-icon">🏓</span>
+    <div>
+      <div class="event-title">Ping Pong</div>
+      <div class="event-subtitle">Tournoi round-robin — tout le monde affronte tout le monde</div>
+    </div>
+    <span class="points-badge">5–4–3–2–1 pts</span>
+  </div>
+  <div class="card">
+    <div class="card-title">Matchs (rentrez les scores)</div>
+    <div id="ppMatches"></div>
+    <br>
+    <button class="btn btn-gold" onclick="calcPingPong()">✓ Calculer le classement</button>
+  </div>
+  <div class="card" id="ppResult" style="display:none">
+    <div class="card-title">Résultat — victoires & points</div>
+    <table><thead><tr><th>Joueur</th><th>V</th><th>D</th><th>Points diff.</th><th>Points Olympiades</th></tr></thead>
+    <tbody id="ppResultBody"></tbody></table>
+  </div>
+</section>
+
+<hr class="sep">
+
+<!-- ═══════════════════════════════════════ -->
+<!--                LA PREZ                 -->
+<!-- ═══════════════════════════════════════ -->
+<section class="event-section" id="prez">
+  <div class="event-header">
+    <span class="event-icon">🎤</span>
+    <div>
+      <div class="event-title">La Prez</div>
+      <div class="event-subtitle">Chaque juré note sur 4 critères (0–5)</div>
+    </div>
+    <span class="points-badge">5–4–3–2–1 pts</span>
+  </div>
+  <div class="card">
+    <div class="card-title">Notes des jurés — Originalité · Humour · Qualité · Aura</div>
+    <div id="prezJuryTable"></div>
+    <br>
+    <button class="btn btn-gold" onclick="calcPrez()">✓ Calculer les moyennes</button>
+  </div>
+  <div class="card" id="prezResult" style="display:none">
+    <div class="card-title">Résultat — Moyennes</div>
+    <table><thead><tr><th>Joueur</th><th>Originalité</th><th>Humour</th><th>Qualité</th><th>Aura</th><th>Total /20</th><th>Points Olympiades</th></tr></thead>
+    <tbody id="prezResultBody"></tbody></table>
+  </div>
+</section>
+
+<footer></footer>
+
+<!-- POPUP -->
+<div class="popup-overlay" id="podiumPopup">
+  <div class="popup">
+    <div style="font-size:3rem">🥋</div>
+    <h2>Podium Final</h2>
+    <div class="podium" id="podiumContent"></div>
+    <button class="btn btn-gold" onclick="document.getElementById('podiumPopup').classList.remove('show')">Fermer</button>
+  </div>
+</div>
+
+<script>
+// ── DATA ──────────────────────────────────────────────
+const PLAYERS = [
+  { name: 'Tayeb',  emoji: '🇩🇿' },
+  { name: 'Remy',   emoji: '👱' },
+  { name: 'Steven', emoji: '🍗' },
+  { name: 'Terry',  emoji: '🌹' },
+  { name: 'Pierre', emoji: '⚔️' },
+];
+const N = PLAYERS.length;
+
+// Points by rank [1st, 2nd, 3rd, 4th, 5th]
+const RANK_PTS = [5, 4, 3, 2, 1];
+
+// olympiad points per event: index = event key
+const eventPts = {
+  board: null,
+  cooking: null,
+  darts: null,
+  pingpong: null,
+  prez: null,
+};
+
+// ── HELPERS ──────────────────────────────────────────
+function playerCell(p) {
+  return `<span class="player-cell">${p.emoji} ${p.name}</span>`;
+}
+
+function rankToPoints(rankedPlayers) {
+  // rankedPlayers: array of player indices sorted best→worst
+  const pts = new Array(N).fill(0);
+  rankedPlayers.forEach((pi, rank) => pts[pi] = RANK_PTS[rank]);
+  return pts;
+}
+
+function updateGlobal() {
+  const totals = new Array(N).fill(0);
+  Object.values(eventPts).forEach(ep => {
+    if (!ep) return;
+    ep.forEach((p, i) => totals[i] += p);
+  });
+
+  const sorted = [...totals.keys()].sort((a, b) => totals[b] - totals[a]);
+  const sb = document.getElementById('globalScoreboard');
+  sb.innerHTML = '';
+  sorted.forEach((pi, rank) => {
+    const crowns = ['👑', '🥈', '🥉', '', ''];
+    sb.innerHTML += `
+      <div class="player-card rank-${rank + 1}">
+        ${rank < 3 ? `<span class="rank-crown">${crowns[rank]}</span>` : ''}
+        <span class="player-emoji">${PLAYERS[pi].emoji}</span>
+        <div class="player-name">${PLAYERS[pi].name}</div>
+        <div class="player-total">${totals[pi]}</div>
+      </div>`;
+  });
+
+  checkComplete(totals, sorted);
+}
+
+function checkComplete(totals, sorted) {
+  const allDone = Object.values(eventPts).every(e => e !== null);
+  if (!allDone) return;
+  const popup = document.getElementById('podiumPopup');
+  if (popup.dataset.shown) return;
+  popup.dataset.shown = '1';
+  const medals = ['🥇', '🥈', '🥉'];
+  const cls = ['p1', 'p2', 'p3'];
+  document.getElementById('podiumContent').innerHTML = sorted.slice(0, 3).map((pi, r) =>
+    `<div class="podium-item ${cls[r]}">
+      <span class="podium-medal">${medals[r]}</span>
+      <span class="podium-emoji">${PLAYERS[pi].emoji}</span>
+      <span class="podium-name">${PLAYERS[pi].name}</span>
+      <span class="podium-pts">${totals[pi]} pts</span>
+    </div>`).join('');
+  popup.classList.add('show');
+}
+
+function renderResultTable(tbodyId, rows) {
+  document.getElementById(tbodyId).innerHTML = rows.join('');
+}
+
+// ── BOARD GAMES ───────────────────────────────────────
+(function buildBoard() {
+  const tb = document.getElementById('boardBody');
+  PLAYERS.forEach((p, i) => {
+    tb.innerHTML += `<tr>
+      <td>${playerCell(p)}</td>
+      <td><input type="number" id="board_${i}" min="1" max="5" placeholder="1–5" oninput="liveBoard()"></td>
+    </tr>`;
+  });
+})();
+
+function liveBoard() {}
+
+function calcBoardGames() {
+  const positions = PLAYERS.map((_, i) => {
+    const v = parseInt(document.getElementById(`board_${i}`).value);
+    return isNaN(v) ? null : v;
+  });
+  if (positions.some(v => v === null)) { alert('Remplis toutes les positions !'); return; }
+
+  const sorted = [...positions.keys()].sort((a, b) => positions[a] - positions[b]);
+  // handle ties: same position → same rank
+  const pts = new Array(N).fill(0);
+  sorted.forEach((pi, rank) => pts[pi] = RANK_PTS[rank]);
+
+  eventPts.board = pts;
+  updateGlobal();
+
+  const rb = document.getElementById('boardResultBody');
+  const rows = [...positions.keys()]
+    .sort((a, b) => positions[a] - positions[b])
+    .map(pi => `<tr class="result-row">
+      <td>${playerCell(PLAYERS[pi])}</td>
+      <td>${positions[pi]}</td>
+      <td><span class="pts-chip ${pts[pi] === 5 ? 'winner' : ''}">${pts[pi]} pts</span></td>
+    </tr>`);
+  renderResultTable('boardResultBody', rows);
+  document.getElementById('boardResult').style.display = '';
+}
+
+// ── COOKING ──────────────────────────────────────────
+(function buildCooking() {
+  let html = '<table><thead><tr><th>Juré</th>';
+  PLAYERS.forEach(p => html += `<th colspan="2">${p.emoji} ${p.name}</th>`);
+  html += '</tr><tr><th></th>';
+  PLAYERS.forEach(() => html += '<th style="font-size:0.7rem;color:var(--muted)">Goût</th><th style="font-size:0.7rem;color:var(--muted)">Présen.</th>');
+  html += '</tr></thead><tbody>';
+  PLAYERS.forEach((jury, ji) => {
+    html += `<tr><td>${playerCell(jury)}</td>`;
+    PLAYERS.forEach((p, pi) => {
+      if (ji === pi) {
+        html += '<td colspan="2" style="text-align:center;color:var(--muted);font-size:1.2rem">—</td>';
+      } else {
+        html += `<td><input type="number" id="cook_g_${ji}_${pi}" min="0" max="5" step="0.5" placeholder="0–5"></td>
+                 <td><input type="number" id="cook_p_${ji}_${pi}" min="0" max="5" step="0.5" placeholder="0–5"></td>`;
+      }
+    });
+    html += '</tr>';
+  });
+  html += '</tbody></table>';
+  document.getElementById('cookingJuryTable').innerHTML = html;
+})();
+
+function calcCooking() {
+  const goûtSums = new Array(N).fill(0), goûtCounts = new Array(N).fill(0);
+  const presSums = new Array(N).fill(0), presCounts = new Array(N).fill(0);
+  let ok = true;
+  PLAYERS.forEach((_, ji) => {
+    PLAYERS.forEach((_, pi) => {
+      if (ji === pi) return;
+      const g = parseFloat(document.getElementById(`cook_g_${ji}_${pi}`)?.value);
+      const p2 = parseFloat(document.getElementById(`cook_p_${ji}_${pi}`)?.value);
+      if (isNaN(g) || isNaN(p2)) { ok = false; return; }
+      goûtSums[pi] += g; goûtCounts[pi]++;
+      presSums[pi] += p2; presCounts[pi]++;
+    });
+  });
+  if (!ok) { alert('Remplis toutes les notes !'); return; }
+
+  const moyGoût = goûtSums.map((s, i) => +(s / goûtCounts[i]).toFixed(2));
+  const moyPres = presSums.map((s, i) => +(s / presCounts[i]).toFixed(2));
+  const total = moyGoût.map((g, i) => +((g + moyPres[i]) / 2).toFixed(2));
+  const sorted = [...total.keys()].sort((a, b) => total[b] - total[a]);
+  const pts = new Array(N).fill(0);
+  sorted.forEach((pi, rank) => pts[pi] = RANK_PTS[rank]);
+
+  eventPts.cooking = pts;
+  updateGlobal();
+
+  const rows = sorted.map(pi => `<tr class="result-row">
+    <td>${playerCell(PLAYERS[pi])}</td>
+    <td>${moyGoût[pi]}</td>
+    <td>${moyPres[pi]}</td>
+    <td><strong>${total[pi]}</strong></td>
+    <td><span class="pts-chip ${pts[pi] === 5 ? 'winner' : ''}">${pts[pi]} pts</span></td>
+  </tr>`);
+  renderResultTable('cookingResultBody', rows);
+  document.getElementById('cookingResult').style.display = '';
+}
+
+// ── DARTS ─────────────────────────────────────────────
+(function buildDarts() {
+  const tb = document.getElementById('dartsBody');
+  PLAYERS.forEach((p, i) => {
+    tb.innerHTML += `<tr>
+      <td>${playerCell(p)}</td>
+      <td><input type="number" id="dart_${i}_0" min="0" max="150" placeholder="pts" oninput="liveDarts(${i})"></td>
+      <td><input type="number" id="dart_${i}_1" min="0" max="150" placeholder="pts" oninput="liveDarts(${i})"></td>
+      <td><input type="number" id="dart_${i}_2" min="0" max="150" placeholder="pts" oninput="liveDarts(${i})"></td>
+      <td id="dart_total_${i}" style="font-weight:600;color:var(--gold)">—</td>
+    </tr>`;
+  });
+})();
+
+function liveDarts(i) {
+  const v = [0,1,2].map(r => parseFloat(document.getElementById(`dart_${i}_${r}`)?.value)||0);
+  document.getElementById(`dart_total_${i}`).textContent = v.reduce((a,b)=>a+b,0);
+}
+
+function calcDarts() {
+  const totals = PLAYERS.map((_, i) => [0,1,2].reduce((s,r)=>s+(parseFloat(document.getElementById(`dart_${i}_${r}`)?.value)||0), 0));
+  const sorted = [...totals.keys()].sort((a, b) => totals[b] - totals[a]);
+  const pts = new Array(N).fill(0);
+  sorted.forEach((pi, rank) => pts[pi] = RANK_PTS[rank]);
+
+  eventPts.darts = pts;
+  updateGlobal();
+
+  const rows = sorted.map(pi => `<tr class="result-row">
+    <td>${playerCell(PLAYERS[pi])}</td>
+    <td>${totals[pi]}</td>
+    <td><span class="pts-chip ${pts[pi] === 5 ? 'winner' : ''}">${pts[pi]} pts</span></td>
+  </tr>`);
+  renderResultTable('dartsResultBody', rows);
+  document.getElementById('dartsResult').style.display = '';
+}
+
+// ── PING PONG ─────────────────────────────────────────
+const ppMatches = [];
+(function buildPP() {
+  let html = '';
+  let mi = 0;
+  for (let a = 0; a < N; a++) {
+    for (let b = a + 1; b < N; b++) {
+      ppMatches.push([a, b]);
+      html += `<div class="match-row">
+        <div class="match-player">${PLAYERS[a].emoji} ${PLAYERS[a].name}</div>
+        <div class="match-score">
+          <input type="number" id="pp_${mi}_a" min="0" max="99" placeholder="0">
+          <span class="match-vs">VS</span>
+          <input type="number" id="pp_${mi}_b" min="0" max="99" placeholder="0">
+        </div>
+        <div class="match-player right">${PLAYERS[b].name} ${PLAYERS[b].emoji}</div>
+        <div style="font-size:0.75rem;color:var(--muted);white-space:nowrap;min-width:60px;text-align:right" id="pp_winner_${mi}"></div>
+      </div>`;
+      mi++;
+    }
+  }
+  document.getElementById('ppMatches').innerHTML = html;
+  // live winner indicator
+  ppMatches.forEach((_, mi) => {
+    ['a','b'].forEach(side => {
+      document.getElementById(`pp_${mi}_${side}`)?.addEventListener('input', () => livePP(mi));
+    });
+  });
+})();
+
+function livePP(mi) {
+  const sa = parseInt(document.getElementById(`pp_${mi}_a`)?.value);
+  const sb = parseInt(document.getElementById(`pp_${mi}_b`)?.value);
+  const el = document.getElementById(`pp_winner_${mi}`);
+  if (!isNaN(sa) && !isNaN(sb)) {
+    if (sa > sb) el.textContent = `✓ ${PLAYERS[ppMatches[mi][0]].name}`;
+    else if (sb > sa) el.textContent = `✓ ${PLAYERS[ppMatches[mi][1]].name}`;
+    else el.textContent = 'Égalité';
+    el.style.color = 'var(--green)';
+  }
+}
+
+function calcPingPong() {
+  const wins = new Array(N).fill(0), losses = new Array(N).fill(0), diff = new Array(N).fill(0);
+  let ok = true;
+  ppMatches.forEach(([a, b], mi) => {
+    const sa = parseInt(document.getElementById(`pp_${mi}_a`)?.value);
+    const sb = parseInt(document.getElementById(`pp_${mi}_b`)?.value);
+    if (isNaN(sa) || isNaN(sb)) { ok = false; return; }
+    diff[a] += sa - sb; diff[b] += sb - sa;
+    if (sa > sb) { wins[a]++; losses[b]++; }
+    else if (sb > sa) { wins[b]++; losses[a]++; }
+    else { wins[a] += 0.5; wins[b] += 0.5; }
+  });
+  if (!ok) { alert('Remplis tous les scores !'); return; }
+
+  const sorted = [...wins.keys()].sort((a, b) => wins[b] - wins[a] || diff[b] - diff[a]);
+  const pts = new Array(N).fill(0);
+  sorted.forEach((pi, rank) => pts[pi] = RANK_PTS[rank]);
+
+  eventPts.pingpong = pts;
+  updateGlobal();
+
+  const rows = sorted.map(pi => `<tr class="result-row">
+    <td>${playerCell(PLAYERS[pi])}</td>
+    <td style="color:var(--green)">${wins[pi]}</td>
+    <td style="color:var(--red)">${losses[pi]}</td>
+    <td>${diff[pi] >= 0 ? '+' : ''}${diff[pi]}</td>
+    <td><span class="pts-chip ${pts[pi] === 5 ? 'winner' : ''}">${pts[pi]} pts</span></td>
+  </tr>`);
+  renderResultTable('ppResultBody', rows);
+  document.getElementById('ppResult').style.display = '';
+}
+
+// ── LA PREZ ───────────────────────────────────────────
+const PREZ_CRITERIA = ['Originalité', 'Humour', 'Qualité', 'Aura'];
+
+(function buildPrez() {
+  let html = '<table><thead><tr><th>Juré</th>';
+  PLAYERS.forEach(p => html += `<th colspan="${PREZ_CRITERIA.length}">${p.emoji} ${p.name}</th>`);
+  html += '</tr><tr><th></th>';
+  PLAYERS.forEach(() => PREZ_CRITERIA.forEach(c => html += `<th style="font-size:0.65rem;color:var(--muted)">${c}</th>`));
+  html += '</tr></thead><tbody>';
+  PLAYERS.forEach((jury, ji) => {
+    html += `<tr><td>${playerCell(jury)}</td>`;
+    PLAYERS.forEach((p, pi) => {
+      if (ji === pi) {
+        html += `<td colspan="${PREZ_CRITERIA.length}" style="text-align:center;color:var(--muted);font-size:1.2rem">—</td>`;
+      } else {
+        PREZ_CRITERIA.forEach((_, ci) => {
+          html += `<td><input type="number" id="prez_${ji}_${pi}_${ci}" min="0" max="5" step="0.5" placeholder="0–5" style="width:52px"></td>`;
+        });
+      }
+    });
+    html += '</tr>';
+  });
+  html += '</tbody></table>';
+  document.getElementById('prezJuryTable').innerHTML = html;
+})();
+
+function calcPrez() {
+  const sums = PLAYERS.map(() => PREZ_CRITERIA.map(() => 0));
+  const counts = PLAYERS.map(() => PREZ_CRITERIA.map(() => 0));
+  let ok = true;
+  PLAYERS.forEach((_, ji) => {
+    PLAYERS.forEach((_, pi) => {
+      if (ji === pi) return;
+      PREZ_CRITERIA.forEach((_, ci) => {
+        const v = parseFloat(document.getElementById(`prez_${ji}_${pi}_${ci}`)?.value);
+        if (isNaN(v)) { ok = false; return; }
+        sums[pi][ci] += v; counts[pi][ci]++;
+      });
+    });
+  });
+  if (!ok) { alert('Remplis toutes les notes !'); return; }
+
+  const avgs = sums.map((criteria, pi) => criteria.map((s, ci) => +(s / counts[pi][ci]).toFixed(2)));
+  const totals = avgs.map(a => +(a.reduce((s, v) => s + v, 0)).toFixed(2));
+  const sorted = [...totals.keys()].sort((a, b) => totals[b] - totals[a]);
+  const pts = new Array(N).fill(0);
+  sorted.forEach((pi, rank) => pts[pi] = RANK_PTS[rank]);
+
+  eventPts.prez = pts;
+  updateGlobal();
+
+  const rows = sorted.map(pi => `<tr class="result-row">
+    <td>${playerCell(PLAYERS[pi])}</td>
+    ${avgs[pi].map(v => `<td>${v}</td>`).join('')}
+    <td><strong>${totals[pi]}</strong></td>
+    <td><span class="pts-chip ${pts[pi] === 5 ? 'winner' : ''}">${pts[pi]} pts</span></td>
+  </tr>`);
+  renderResultTable('prezResultBody', rows);
+  document.getElementById('prezResult').style.display = '';
+}
+
+// ── NAV ACTIVE ────────────────────────────────────────
+const sections = ['global','board-games','cooking','darts','pingpong','prez'];
+window.addEventListener('scroll', () => {
+  let cur = sections[0];
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && window.scrollY >= el.offsetTop - 120) cur = id;
+  });
+  document.querySelectorAll('nav a').forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === `#${cur}`);
+  });
+});
+
+// Init scoreboard
+updateGlobal();
+</script>
+</body>
+</html>
+
     
 </body>
 </html>
