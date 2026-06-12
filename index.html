@@ -49,8 +49,7 @@
     pointer-events: none;
   }
   .belt-logo {
-    font-size: 5rem;
-    line-height: 1;
+    width: 120px; height: 72px;
     filter: drop-shadow(0 0 24px var(--gold));
     animation: glow 2.5s ease-in-out infinite alternate;
   }
@@ -77,134 +76,70 @@
 
   /* ── NAV ── */
   nav {
-    position: sticky;
-    top: 0;
-    z-index: 100;
+    position: sticky; top: 0; z-index: 100;
     background: rgba(10,10,15,0.92);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border);
-    display: flex;
-    justify-content: center;
-    gap: 0.25rem;
-    padding: 0.6rem 1rem;
-    flex-wrap: wrap;
+    display: flex; justify-content: center;
+    gap: 0.25rem; padding: 0.6rem 1rem; flex-wrap: wrap;
   }
   nav a {
-    text-decoration: none;
-    color: var(--muted);
-    font-size: 0.78rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 0.45rem 1rem;
-    border-radius: 999px;
-    border: 1px solid transparent;
-    transition: all 0.2s;
+    text-decoration: none; color: var(--muted);
+    font-size: 0.78rem; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 0.45rem 1rem; border-radius: 999px;
+    border: 1px solid transparent; transition: all 0.2s;
   }
   nav a:hover { color: var(--text); border-color: var(--border); background: var(--bg3); }
   nav a.active { color: var(--gold); border-color: rgba(245,200,66,0.3); background: rgba(245,200,66,0.08); }
 
   /* ── GLOBAL SCOREBOARD ── */
-  #global {
-    max-width: 780px;
-    margin: 3rem auto 0;
-    padding: 0 1rem;
-  }
+  #global { max-width: 780px; margin: 3rem auto 0; padding: 0 1rem; }
   .section-title {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 2.2rem;
-    letter-spacing: 0.08em;
-    color: var(--gold);
-    margin-bottom: 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
+    font-size: 2.2rem; letter-spacing: 0.08em; color: var(--gold);
+    margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.6rem;
   }
   .scoreboard-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 0.75rem;
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.75rem;
   }
   .player-card {
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 1.25rem 0.75rem;
-    text-align: center;
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 16px; padding: 1.25rem 0.75rem; text-align: center;
     transition: transform 0.2s, border-color 0.2s;
-    position: relative;
-    overflow: hidden;
+    position: relative; overflow: hidden;
   }
   .player-card.rank-1 { border-color: var(--gold); box-shadow: 0 0 20px rgba(245,200,66,0.15); }
   .player-card.rank-2 { border-color: #C0C0C0; }
   .player-card.rank-3 { border-color: #CD7F32; }
-  .player-card .rank-crown {
-    position: absolute; top: 6px; right: 8px;
-    font-size: 1rem;
-  }
-  .player-emoji { font-size: 2.4rem; line-height: 1; margin-bottom: 0.4rem; display: block; }
-  .player-name {
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-  .player-total {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2.8rem;
-    line-height: 1;
-    color: var(--text);
-    margin-top: 0.2rem;
-  }
+  .player-card .rank-crown { position: absolute; top: 6px; right: 8px; font-size: 1rem; }
+  .player-avatar { width: 52px; height: 52px; margin: 0 auto 0.5rem; display: block; }
+  .player-name { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+  .player-total { font-family: 'Bebas Neue', sans-serif; font-size: 2.8rem; line-height: 1; color: var(--text); margin-top: 0.2rem; }
   .player-card.rank-1 .player-total { color: var(--gold); }
 
   /* ── SECTIONS ── */
-  .event-section {
-    max-width: 900px;
-    margin: 4rem auto 0;
-    padding: 0 1rem;
-  }
+  .event-section { max-width: 900px; margin: 4rem auto 0; padding: 0 1rem; }
   .event-header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 1rem;
+    margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border);
   }
   .event-icon { font-size: 2.2rem; }
-  .event-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2rem;
-    letter-spacing: 0.06em;
-    color: var(--text);
-  }
+  .event-title { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 0.06em; color: var(--text); }
   .event-subtitle { font-size: 0.78rem; color: var(--muted); margin-top: 0.1rem; }
   .points-badge {
     margin-left: auto;
-    background: rgba(245,200,66,0.1);
-    border: 1px solid rgba(245,200,66,0.3);
-    color: var(--gold);
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 0.3rem 0.8rem;
-    border-radius: 999px;
+    background: rgba(245,200,66,0.1); border: 1px solid rgba(245,200,66,0.3); color: var(--gold);
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 0.3rem 0.8rem; border-radius: 999px; white-space: nowrap;
   }
 
   /* ── TABLES ── */
   table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
   thead th {
-    padding: 0.7rem 1rem;
-    text-align: left;
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--muted);
-    border-bottom: 1px solid var(--border);
+    padding: 0.7rem 1rem; text-align: left;
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--border);
   }
   thead th:not(:first-child) { text-align: center; }
   tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
@@ -212,174 +147,246 @@
   tbody td { padding: 0.75rem 1rem; }
   tbody td:not(:first-child) { text-align: center; }
   .player-cell { display: flex; align-items: center; gap: 0.5rem; font-weight: 600; }
+  .player-cell svg, .player-cell img { width: 24px; height: 24px; flex-shrink: 0; }
 
   /* ── INPUTS ── */
-  input[type="number"], input[type="text"], select {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    color: var(--text);
-    border-radius: 8px;
-    padding: 0.4rem 0.6rem;
-    font-size: 0.9rem;
-    font-family: 'Inter', sans-serif;
-    text-align: center;
-    width: 70px;
-    transition: border-color 0.2s;
+  input[type="number"] {
+    background: var(--bg2); border: 1px solid var(--border); color: var(--text);
+    border-radius: 8px; padding: 0.4rem 0.6rem; font-size: 0.9rem;
+    font-family: 'Inter', sans-serif; text-align: center; width: 70px; transition: border-color 0.2s;
   }
-  input[type="number"]:focus, input[type="text"]:focus, select:focus {
-    outline: none;
-    border-color: var(--accent);
-  }
+  input[type="number"]:focus { outline: none; border-color: var(--accent); }
   input[type="number"]::-webkit-inner-spin-button { opacity: 0.5; }
 
   /* ── BUTTONS ── */
   .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    background: var(--accent);
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-    padding: 0.6rem 1.4rem;
-    font-size: 0.85rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s, transform 0.1s;
-    font-family: 'Inter', sans-serif;
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    background: var(--accent); color: #fff; border: none; border-radius: 10px;
+    padding: 0.6rem 1.4rem; font-size: 0.85rem; font-weight: 600;
+    cursor: pointer; transition: background 0.2s, transform 0.1s; font-family: 'Inter', sans-serif;
   }
   .btn:hover { background: var(--accent2); }
   .btn:active { transform: scale(0.97); }
-  .btn-gold {
-    background: var(--gold);
-    color: #1a1000;
-  }
+  .btn-gold { background: var(--gold); color: #1a1000; }
   .btn-gold:hover { background: var(--gold-dark); color: #fff; }
 
   /* ── RESULT ROW ── */
   .result-row td { background: rgba(245,200,66,0.05); font-weight: 600; }
   .pts-chip {
-    display: inline-block;
-    background: rgba(245,200,66,0.15);
-    color: var(--gold);
-    border-radius: 999px;
-    padding: 0.15rem 0.6rem;
-    font-size: 0.78rem;
-    font-weight: 700;
+    display: inline-block; background: rgba(245,200,66,0.15); color: var(--gold);
+    border-radius: 999px; padding: 0.15rem 0.6rem; font-size: 0.78rem; font-weight: 700;
   }
   .pts-chip.winner { background: rgba(245,200,66,0.3); font-size: 0.9rem; }
 
-  /* ── CARD CONTAINER ── */
-  .card {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
-  }
-  .card-title {
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 1rem;
-  }
+  /* ── CARD ── */
+  .card { background: var(--bg2); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; margin-bottom: 1.5rem; }
+  .card-title { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; }
 
-  /* ── RATING STARS ── */
-  .rating-input { display: flex; gap: 4px; justify-content: center; }
-  .rating-input input[type="number"] { width: 55px; }
+  /* ── TABS (Cuisine & Prez) ── */
+  .jury-tabs { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
+  .jury-tab {
+    display: flex; align-items: center; gap: 6px;
+    padding: 0.4rem 1rem; border-radius: 999px; border: 1px solid var(--border);
+    background: var(--bg3); color: var(--muted); font-size: 0.8rem; font-weight: 600;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .jury-tab svg, .jury-tab img { width: 20px; height: 20px; }
+  .jury-tab:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
+  .jury-tab.active { color: var(--gold); border-color: rgba(245,200,66,0.4); background: rgba(245,200,66,0.08); }
+  .jury-panel { display: none; }
+  .jury-panel.active { display: block; }
 
-  /* ── PING PONG BRACKET ── */
-  .match-row {
+  .criteria-grid {
     display: grid;
-    grid-template-columns: 1fr auto 1fr auto;
-    align-items: center;
+    grid-template-columns: 1fr;
     gap: 0.75rem;
-    padding: 0.6rem 0;
-    border-bottom: 1px solid var(--border);
+  }
+  .criteria-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    background: var(--bg3);
+    border-radius: 10px;
+    border: 1px solid var(--border);
+  }
+  .criteria-label { font-size: 0.85rem; font-weight: 600; }
+  .criteria-label span { font-size: 0.72rem; color: var(--muted); font-weight: 400; display: block; }
+
+  /* ── PING PONG ── */
+  .match-row {
+    display: grid; grid-template-columns: 1fr auto 1fr auto;
+    align-items: center; gap: 0.75rem;
+    padding: 0.6rem 0; border-bottom: 1px solid var(--border);
   }
   .match-row:last-child { border-bottom: none; }
   .match-player { display: flex; align-items: center; gap: 0.4rem; font-weight: 600; font-size: 0.9rem; }
   .match-player.right { justify-content: flex-end; }
+  .match-player svg, .match-player img { width: 20px; height: 20px; }
   .match-vs { color: var(--muted); font-size: 0.8rem; font-weight: 700; }
   .match-score { display: flex; align-items: center; gap: 0.4rem; justify-content: center; }
   .match-score input { width: 55px; }
 
-  /* ── FOOTER SPACER ── */
+  /* ── FOOTER / SEP ── */
   footer { height: 6rem; }
-
-  /* ── SEPARATOR ── */
-  .sep {
-    max-width: 900px;
-    margin: 4rem auto 0;
-    border: none;
-    border-top: 1px solid var(--border);
-  }
+  .sep { max-width: 900px; margin: 4rem auto 0; border: none; border-top: 1px solid var(--border); }
 
   /* ── POPUP ── */
   .popup-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.75);
-    backdrop-filter: blur(6px);
-    z-index: 999;
-    align-items: center;
-    justify-content: center;
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.75); backdrop-filter: blur(6px);
+    z-index: 999; align-items: center; justify-content: center;
   }
   .popup-overlay.show { display: flex; }
   .popup {
-    background: var(--bg2);
-    border: 1px solid var(--gold);
-    border-radius: 24px;
-    padding: 2.5rem;
-    max-width: 480px;
-    width: 90%;
-    text-align: center;
+    background: var(--bg2); border: 1px solid var(--gold); border-radius: 24px;
+    padding: 2.5rem; max-width: 480px; width: 90%; text-align: center;
     animation: popIn 0.4s cubic-bezier(.175,.885,.32,1.275) both;
     box-shadow: 0 0 60px rgba(245,200,66,0.2);
   }
-  @keyframes popIn {
-    from { transform: scale(0.7); opacity: 0; }
-    to   { transform: scale(1); opacity: 1; }
-  }
-  .popup h2 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 3rem;
-    color: var(--gold);
-    letter-spacing: 0.08em;
-    margin: 0.5rem 0 1.5rem;
-  }
+  @keyframes popIn { from { transform: scale(0.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  .popup h2 { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; color: var(--gold); letter-spacing: 0.08em; margin: 0.5rem 0 1.5rem; }
   .podium { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 2rem; }
-  .podium-item {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 0.9rem 1.2rem;
-    border-radius: 12px;
-    font-weight: 700;
-  }
+  .podium-item { display: flex; align-items: center; gap: 1rem; padding: 0.9rem 1.2rem; border-radius: 12px; font-weight: 700; }
   .podium-item.p1 { background: rgba(245,200,66,0.12); border: 1px solid rgba(245,200,66,0.4); }
   .podium-item.p2 { background: rgba(192,192,192,0.08); border: 1px solid rgba(192,192,192,0.3); }
   .podium-item.p3 { background: rgba(205,127,50,0.08); border: 1px solid rgba(205,127,50,0.3); }
   .podium-medal { font-size: 1.6rem; }
-  .podium-emoji { font-size: 1.6rem; }
+  .podium-avatar { width: 36px; height: 36px; }
   .podium-name { flex: 1; text-align: left; font-size: 1.1rem; }
   .podium-pts { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; color: var(--gold); }
 
   @media (max-width: 600px) {
     .scoreboard-grid { grid-template-columns: repeat(3, 1fr); }
-    .match-row { grid-template-columns: 1fr auto 1fr; }
-    .match-row .match-score { grid-column: 1 / -1; justify-content: center; }
+    .match-row { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+    .match-score { grid-column: 1 / -1; order: 3; }
+    .match-player.right { justify-content: flex-start; }
+    .points-badge { display: none; }
   }
 </style>
 </head>
 <body>
 
+<!-- SVG AVATARS inline defs -->
+<svg style="display:none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- BELT (logo header) -->
+    <symbol id="sym-belt" viewBox="0 0 120 72">
+      <!-- strap -->
+      <rect x="0" y="22" width="120" height="28" rx="8" fill="#8B5E1A"/>
+      <rect x="2" y="25" width="116" height="22" rx="6" fill="#A0701F"/>
+      <!-- buckle plate -->
+      <rect x="38" y="14" width="44" height="44" rx="6" fill="#F5C842"/>
+      <rect x="41" y="17" width="38" height="38" rx="4" fill="#E6A800"/>
+      <!-- center gem -->
+      <ellipse cx="60" cy="36" rx="10" ry="10" fill="#fff" opacity="0.15"/>
+      <ellipse cx="60" cy="36" rx="7" ry="7" fill="#F5C842"/>
+      <ellipse cx="60" cy="36" rx="4" ry="4" fill="#fff" opacity="0.4"/>
+      <!-- decorative lines on plate -->
+      <line x1="48" y1="26" x2="72" y2="26" stroke="#F5C842" stroke-width="1" opacity="0.5"/>
+      <line x1="48" y1="46" x2="72" y2="46" stroke="#F5C842" stroke-width="1" opacity="0.5"/>
+      <!-- side holes -->
+      <circle cx="10" cy="36" r="4" fill="#6B4710"/>
+      <circle cx="110" cy="36" r="4" fill="#6B4710"/>
+    </symbol>
+
+    <!-- TAYEB – Algeria flag colours -->
+    <symbol id="sym-tayeb" viewBox="0 0 52 52">
+      <circle cx="26" cy="26" r="26" fill="#006233"/>
+      <path d="M26 0 A26 26 0 0 1 26 52 Z" fill="#fff"/>
+      <path d="M28 18 A10 10 0 1 0 28 34 A8 8 0 1 1 28 18 Z" fill="#D21034"/>
+      <polygon points="32,26 34,20 36,26 30,22 38,22" fill="#D21034" transform="translate(-4,-1)"/>
+    </symbol>
+
+    <!-- REMY – blond blue-eyed guy -->
+    <symbol id="sym-remy" viewBox="0 0 52 52">
+      <circle cx="26" cy="26" r="26" fill="#FDE8C8"/>
+      <!-- hair -->
+      <ellipse cx="26" cy="14" rx="16" ry="11" fill="#F0C040"/>
+      <rect x="10" y="14" width="32" height="8" fill="#F0C040"/>
+      <!-- face -->
+      <ellipse cx="26" cy="28" rx="13" ry="15" fill="#FDDCAA"/>
+      <!-- eyes -->
+      <ellipse cx="21" cy="25" rx="3.5" ry="3.5" fill="#fff"/>
+      <ellipse cx="31" cy="25" rx="3.5" ry="3.5" fill="#fff"/>
+      <circle cx="21" cy="25.5" r="2.2" fill="#1E88E5"/>
+      <circle cx="31" cy="25.5" r="2.2" fill="#1E88E5"/>
+      <circle cx="21.8" cy="24.7" r="0.8" fill="#0D47A1"/>
+      <circle cx="31.8" cy="24.7" r="0.8" fill="#0D47A1"/>
+      <circle cx="22.3" cy="24.2" r="0.5" fill="#fff"/>
+      <circle cx="32.3" cy="24.2" r="0.5" fill="#fff"/>
+      <!-- eyebrows -->
+      <path d="M18 21.5 Q21 20 24 21.5" stroke="#C8960A" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <path d="M28 21.5 Q31 20 34 21.5" stroke="#C8960A" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <!-- smile -->
+      <path d="M21 33 Q26 37 31 33" stroke="#C07040" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <!-- nose -->
+      <path d="M25 28 Q24 31 26 32 Q28 31 27 28" stroke="#C07040" stroke-width="1" fill="none"/>
+      <!-- ears -->
+      <ellipse cx="13" cy="28" rx="3" ry="4" fill="#FDDCAA"/>
+      <ellipse cx="39" cy="28" rx="3" ry="4" fill="#FDDCAA"/>
+    </symbol>
+
+    <!-- STEVEN – chicken leg -->
+    <symbol id="sym-steven" viewBox="0 0 52 52">
+      <circle cx="26" cy="26" r="26" fill="#2d1a0a"/>
+      <!-- bone -->
+      <rect x="30" y="34" width="6" height="14" rx="3" fill="#e8e0d0"/>
+      <ellipse cx="33" cy="34" rx="5" ry="5" fill="#e8e0d0"/>
+      <ellipse cx="33" cy="48" rx="5" ry="5" fill="#e8e0d0"/>
+      <!-- meat -->
+      <ellipse cx="24" cy="24" rx="16" ry="18" fill="#C0622A"/>
+      <ellipse cx="22" cy="22" rx="13" ry="14" fill="#D4722E"/>
+      <ellipse cx="20" cy="20" rx="9" ry="10" fill="#E08030"/>
+      <!-- crispy highlights -->
+      <path d="M14 18 Q18 12 26 16" stroke="#F0A050" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <path d="M24 14 Q30 10 32 18" stroke="#F0A050" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    </symbol>
+
+    <!-- TERRY – rose -->
+    <symbol id="sym-terry" viewBox="0 0 52 52">
+      <circle cx="26" cy="26" r="26" fill="#1a0a10"/>
+      <!-- stem -->
+      <path d="M26 48 Q24 38 26 30" stroke="#2E7D32" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <!-- leaf -->
+      <path d="M26 40 Q18 35 20 28" stroke="#2E7D32" stroke-width="2" fill="#388E3C" stroke-linecap="round"/>
+      <!-- petals outer -->
+      <ellipse cx="26" cy="22" rx="9" ry="11" fill="#C62828"/>
+      <ellipse cx="19" cy="25" rx="7" ry="9" fill="#C62828" transform="rotate(-30,19,25)"/>
+      <ellipse cx="33" cy="25" rx="7" ry="9" fill="#C62828" transform="rotate(30,33,25)"/>
+      <!-- petals mid -->
+      <ellipse cx="26" cy="21" rx="7" ry="8" fill="#E53935"/>
+      <ellipse cx="21" cy="24" rx="5.5" ry="7" fill="#E53935" transform="rotate(-25,21,24)"/>
+      <ellipse cx="31" cy="24" rx="5.5" ry="7" fill="#E53935" transform="rotate(25,31,24)"/>
+      <!-- center -->
+      <ellipse cx="26" cy="20" rx="5" ry="5.5" fill="#EF9A9A"/>
+      <ellipse cx="26" cy="19" rx="3" ry="3.5" fill="#FFCDD2"/>
+    </symbol>
+
+    <!-- PIERRE – League of Legends logo -->
+    <symbol id="sym-pierre" viewBox="0 0 52 52">
+      <circle cx="26" cy="26" r="26" fill="#091428"/>
+      <!-- LoL shield shape -->
+      <path d="M26 8 L40 14 L40 30 Q40 42 26 48 Q12 42 12 30 L12 14 Z" fill="#0A1428" stroke="#C89B3C" stroke-width="2"/>
+      <!-- inner shield -->
+      <path d="M26 13 L36 18 L36 29 Q36 38 26 43 Q16 38 16 29 L16 18 Z" fill="#091428" stroke="#C89B3C" stroke-width="1.5"/>
+      <!-- crossed swords -->
+      <line x1="18" y1="20" x2="34" y2="36" stroke="#C89B3C" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="34" y1="20" x2="18" y2="36" stroke="#C89B3C" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- sword guards -->
+      <line x1="15" y1="23" x2="21" y2="17" stroke="#C89B3C" stroke-width="2" stroke-linecap="round"/>
+      <line x1="37" y1="23" x2="31" y2="17" stroke="#C89B3C" stroke-width="2" stroke-linecap="round"/>
+      <!-- center gem -->
+      <circle cx="26" cy="28" r="3" fill="#C89B3C"/>
+      <circle cx="26" cy="28" r="1.5" fill="#FFD700"/>
+    </symbol>
+  </defs>
+</svg>
+
 <!-- HEADER -->
 <header>
-  <div class="belt-logo">🥋</div>
+  <svg class="belt-logo" aria-label="Ceinture de catch"><use href="#sym-belt"/></svg>
   <h1>Bro'lymp</h1>
   <p class="subtitle">Les Olympiades entre frères</p>
 </header>
@@ -394,9 +401,7 @@
   <a href="#prez">🎤 La Prez</a>
 </nav>
 
-<!-- ═══════════════════════════════════════ -->
-<!--           GLOBAL SCOREBOARD            -->
-<!-- ═══════════════════════════════════════ -->
+<!-- GLOBAL SCOREBOARD -->
 <section id="global">
   <div class="section-title">🏆 Classement général</div>
   <div class="scoreboard-grid" id="globalScoreboard"></div>
@@ -404,154 +409,143 @@
 
 <hr class="sep">
 
-<!-- ═══════════════════════════════════════ -->
-<!--            JEUX DE SOCIÉTÉ             -->
-<!-- ═══════════════════════════════════════ -->
+<!-- JEUX DE SOCIÉTÉ -->
 <section class="event-section" id="board-games">
   <div class="event-header">
     <span class="event-icon">🎲</span>
     <div>
       <div class="event-title">Jeux de société</div>
-      <div class="event-subtitle">Rentrez l'ordre d'arrivée</div>
+      <div class="event-subtitle">Rentrez l'ordre d'arrivée (1 = premier)</div>
     </div>
     <span class="points-badge">5–4–3–2–1 pts</span>
   </div>
   <div class="card">
-    <div class="card-title">Ordre d'arrivée (1 = premier)</div>
+    <div class="card-title">Ordre d'arrivée</div>
     <table>
-      <thead><tr>
-        <th>Joueur</th>
-        <th>Position</th>
-      </tr></thead>
+      <thead><tr><th>Joueur</th><th>Position</th></tr></thead>
       <tbody id="boardBody"></tbody>
     </table>
     <br>
-    <button class="btn btn-gold" onclick="calcBoardGames()">✓ Valider les résultats</button>
+    <button class="btn btn-gold" onclick="calcBoardGames()">✓ Valider</button>
   </div>
   <div class="card" id="boardResult" style="display:none">
     <div class="card-title">Résultat</div>
-    <table><thead><tr><th>Joueur</th><th>Position</th><th>Points Olympiades</th></tr></thead>
+    <table><thead><tr><th>Joueur</th><th>Position</th><th>Points</th></tr></thead>
     <tbody id="boardResultBody"></tbody></table>
   </div>
 </section>
 
 <hr class="sep">
 
-<!-- ═══════════════════════════════════════ -->
-<!--               CUISINE                  -->
-<!-- ═══════════════════════════════════════ -->
+<!-- CUISINE -->
 <section class="event-section" id="cooking">
   <div class="event-header">
     <span class="event-icon">🍳</span>
     <div>
       <div class="event-title">Cuisine</div>
-      <div class="event-subtitle">Chaque joueur note les autres sur Goût et Présentation (0–5)</div>
+      <div class="event-subtitle">Chaque juré note les autres — Goût /5 &amp; Présentation /5</div>
     </div>
     <span class="points-badge">5–4–3–2–1 pts</span>
   </div>
   <div class="card">
-    <div class="card-title">Notes des jurés — Goût /5 &amp; Présentation /5</div>
-    <div id="cookingJuryTable"></div>
+    <div class="card-title">Je suis le juré :</div>
+    <div class="jury-tabs" id="cookingTabs"></div>
+    <div id="cookingPanels"></div>
     <br>
     <button class="btn btn-gold" onclick="calcCooking()">✓ Calculer les moyennes</button>
   </div>
   <div class="card" id="cookingResult" style="display:none">
     <div class="card-title">Résultat — Moyennes</div>
-    <table><thead><tr><th>Chef</th><th>Moy. Goût</th><th>Moy. Présentation</th><th>Moyenne Totale</th><th>Points Olympiades</th></tr></thead>
+    <table><thead><tr><th>Chef</th><th>Moy. Goût</th><th>Moy. Présent.</th><th>Moyenne</th><th>Points</th></tr></thead>
     <tbody id="cookingResultBody"></tbody></table>
   </div>
 </section>
 
 <hr class="sep">
 
-<!-- ═══════════════════════════════════════ -->
-<!--               FLÉCHETTES               -->
-<!-- ═══════════════════════════════════════ -->
+<!-- FLÉCHETTES -->
 <section class="event-section" id="darts">
   <div class="event-header">
     <span class="event-icon">🎯</span>
     <div>
       <div class="event-title">Fléchettes</div>
-      <div class="event-subtitle">Chaque joueur lance 3 fléchettes par manche — total sur 3 manches</div>
+      <div class="event-subtitle">3 fléchettes par manche · Bullseye 50 · Rouge 25 · Verts 20/15/10/5</div>
     </div>
     <span class="points-badge">5–4–3–2–1 pts</span>
   </div>
   <div class="card">
-    <div class="card-title">Scores — Bullseye 50 pts, anneau rouge 25 pts, verts 20/15/10/5 pts</div>
+    <div class="card-title">Scores par manche</div>
     <table>
       <thead><tr><th>Joueur</th><th>Manche 1</th><th>Manche 2</th><th>Manche 3</th><th>Total</th></tr></thead>
       <tbody id="dartsBody"></tbody>
     </table>
     <br>
-    <button class="btn btn-gold" onclick="calcDarts()">✓ Valider les scores</button>
+    <button class="btn btn-gold" onclick="calcDarts()">✓ Valider</button>
   </div>
   <div class="card" id="dartsResult" style="display:none">
     <div class="card-title">Résultat</div>
-    <table><thead><tr><th>Joueur</th><th>Total</th><th>Points Olympiades</th></tr></thead>
+    <table><thead><tr><th>Joueur</th><th>Total</th><th>Points</th></tr></thead>
     <tbody id="dartsResultBody"></tbody></table>
   </div>
 </section>
 
 <hr class="sep">
 
-<!-- ═══════════════════════════════════════ -->
-<!--              PING PONG                 -->
-<!-- ═══════════════════════════════════════ -->
+<!-- PING PONG -->
 <section class="event-section" id="pingpong">
   <div class="event-header">
     <span class="event-icon">🏓</span>
     <div>
       <div class="event-title">Ping Pong</div>
-      <div class="event-subtitle">Tournoi round-robin — tout le monde affronte tout le monde</div>
+      <div class="event-subtitle">Round-robin — tout le monde affronte tout le monde</div>
     </div>
     <span class="points-badge">5–4–3–2–1 pts</span>
   </div>
   <div class="card">
-    <div class="card-title">Matchs (rentrez les scores)</div>
+    <div class="card-title">Matchs</div>
     <div id="ppMatches"></div>
     <br>
     <button class="btn btn-gold" onclick="calcPingPong()">✓ Calculer le classement</button>
   </div>
   <div class="card" id="ppResult" style="display:none">
-    <div class="card-title">Résultat — victoires & points</div>
-    <table><thead><tr><th>Joueur</th><th>V</th><th>D</th><th>Points diff.</th><th>Points Olympiades</th></tr></thead>
+    <div class="card-title">Classement</div>
+    <table><thead><tr><th>Joueur</th><th>V</th><th>D</th><th>Diff.</th><th>Points</th></tr></thead>
     <tbody id="ppResultBody"></tbody></table>
   </div>
 </section>
 
 <hr class="sep">
 
-<!-- ═══════════════════════════════════════ -->
-<!--                LA PREZ                 -->
-<!-- ═══════════════════════════════════════ -->
+<!-- LA PREZ -->
 <section class="event-section" id="prez">
   <div class="event-header">
     <span class="event-icon">🎤</span>
     <div>
       <div class="event-title">La Prez</div>
-      <div class="event-subtitle">Chaque juré note sur 4 critères (0–5)</div>
+      <div class="event-subtitle">Originalité · Humour · Qualité · Aura — chacun /5</div>
     </div>
     <span class="points-badge">5–4–3–2–1 pts</span>
   </div>
   <div class="card">
-    <div class="card-title">Notes des jurés — Originalité · Humour · Qualité · Aura</div>
-    <div id="prezJuryTable"></div>
+    <div class="card-title">Je suis le juré :</div>
+    <div class="jury-tabs" id="prezTabs"></div>
+    <div id="prezPanels"></div>
     <br>
     <button class="btn btn-gold" onclick="calcPrez()">✓ Calculer les moyennes</button>
   </div>
   <div class="card" id="prezResult" style="display:none">
-    <div class="card-title">Résultat — Moyennes</div>
-    <table><thead><tr><th>Joueur</th><th>Originalité</th><th>Humour</th><th>Qualité</th><th>Aura</th><th>Total /20</th><th>Points Olympiades</th></tr></thead>
+    <div class="card-title">Résultat</div>
+    <table><thead><tr><th>Joueur</th><th>Orig.</th><th>Humour</th><th>Qualité</th><th>Aura</th><th>Total /20</th><th>Points</th></tr></thead>
     <tbody id="prezResultBody"></tbody></table>
   </div>
 </section>
 
 <footer></footer>
 
-<!-- POPUP -->
+<!-- POPUP PODIUM -->
 <div class="popup-overlay" id="podiumPopup">
   <div class="popup">
-    <div style="font-size:3rem">🥋</div>
+    <svg style="width:64px;height:38px" aria-label="Ceinture"><use href="#sym-belt"/></svg>
     <h2>Podium Final</h2>
     <div class="podium" id="podiumContent"></div>
     <button class="btn btn-gold" onclick="document.getElementById('podiumPopup').classList.remove('show')">Fermer</button>
@@ -559,197 +553,155 @@
 </div>
 
 <script>
-// ── DATA ──────────────────────────────────────────────
+// ── PLAYERS ──────────────────────────────────────────
 const PLAYERS = [
-  { name: 'Tayeb',  emoji: '🇩🇿' },
-  { name: 'Remy',   emoji: '👱' },
-  { name: 'Steven', emoji: '🍗' },
-  { name: 'Terry',  emoji: '🌹' },
-  { name: 'Pierre', emoji: '⚔️' },
+  { name: 'Tayeb',  sym: 'sym-tayeb'  },
+  { name: 'Remy',   sym: 'sym-remy'   },
+  { name: 'Steven', sym: 'sym-steven' },
+  { name: 'Terry',  sym: 'sym-terry'  },
+  { name: 'Pierre', sym: 'sym-pierre' },
 ];
 const N = PLAYERS.length;
-
-// Points by rank [1st, 2nd, 3rd, 4th, 5th]
 const RANK_PTS = [5, 4, 3, 2, 1];
+const eventPts = { board: null, cooking: null, darts: null, pingpong: null, prez: null };
 
-// olympiad points per event: index = event key
-const eventPts = {
-  board: null,
-  cooking: null,
-  darts: null,
-  pingpong: null,
-  prez: null,
-};
-
-// ── HELPERS ──────────────────────────────────────────
+// ── AVATAR HELPERS ────────────────────────────────────
+function avatarSVG(p, size=24) {
+  return `<svg width="${size}" height="${size}" viewBox="0 0 52 52" aria-hidden="true"><use href="#${p.sym}"/></svg>`;
+}
 function playerCell(p) {
-  return `<span class="player-cell">${p.emoji} ${p.name}</span>`;
+  return `<span class="player-cell">${avatarSVG(p, 28)} ${p.name}</span>`;
+}
+function tabAvatar(p) {
+  return `<svg width="22" height="22" viewBox="0 0 52 52" aria-hidden="true"><use href="#${p.sym}"/></svg>`;
 }
 
-function rankToPoints(rankedPlayers) {
-  // rankedPlayers: array of player indices sorted best→worst
-  const pts = new Array(N).fill(0);
-  rankedPlayers.forEach((pi, rank) => pts[pi] = RANK_PTS[rank]);
-  return pts;
-}
-
+// ── GLOBAL SCOREBOARD ────────────────────────────────
 function updateGlobal() {
   const totals = new Array(N).fill(0);
-  Object.values(eventPts).forEach(ep => {
-    if (!ep) return;
-    ep.forEach((p, i) => totals[i] += p);
-  });
-
+  Object.values(eventPts).forEach(ep => { if (ep) ep.forEach((p, i) => totals[i] += p); });
   const sorted = [...totals.keys()].sort((a, b) => totals[b] - totals[a]);
-  const sb = document.getElementById('globalScoreboard');
-  sb.innerHTML = '';
-  sorted.forEach((pi, rank) => {
-    const crowns = ['👑', '🥈', '🥉', '', ''];
-    sb.innerHTML += `
-      <div class="player-card rank-${rank + 1}">
-        ${rank < 3 ? `<span class="rank-crown">${crowns[rank]}</span>` : ''}
-        <span class="player-emoji">${PLAYERS[pi].emoji}</span>
-        <div class="player-name">${PLAYERS[pi].name}</div>
-        <div class="player-total">${totals[pi]}</div>
-      </div>`;
-  });
-
+  const crowns = ['👑','🥈','🥉','',''];
+  document.getElementById('globalScoreboard').innerHTML = sorted.map((pi, rank) => `
+    <div class="player-card rank-${rank+1}">
+      ${rank < 3 ? `<span class="rank-crown">${crowns[rank]}</span>` : ''}
+      <svg class="player-avatar" viewBox="0 0 52 52"><use href="#${PLAYERS[pi].sym}"/></svg>
+      <div class="player-name">${PLAYERS[pi].name}</div>
+      <div class="player-total">${totals[pi]}</div>
+    </div>`).join('');
   checkComplete(totals, sorted);
 }
 
 function checkComplete(totals, sorted) {
-  const allDone = Object.values(eventPts).every(e => e !== null);
-  if (!allDone) return;
+  if (!Object.values(eventPts).every(e => e !== null)) return;
   const popup = document.getElementById('podiumPopup');
   if (popup.dataset.shown) return;
   popup.dataset.shown = '1';
-  const medals = ['🥇', '🥈', '🥉'];
-  const cls = ['p1', 'p2', 'p3'];
-  document.getElementById('podiumContent').innerHTML = sorted.slice(0, 3).map((pi, r) =>
+  const medals = ['🥇','🥈','🥉'], cls = ['p1','p2','p3'];
+  document.getElementById('podiumContent').innerHTML = sorted.slice(0,3).map((pi,r) =>
     `<div class="podium-item ${cls[r]}">
       <span class="podium-medal">${medals[r]}</span>
-      <span class="podium-emoji">${PLAYERS[pi].emoji}</span>
+      <svg class="podium-avatar" viewBox="0 0 52 52"><use href="#${PLAYERS[pi].sym}"/></svg>
       <span class="podium-name">${PLAYERS[pi].name}</span>
       <span class="podium-pts">${totals[pi]} pts</span>
     </div>`).join('');
   popup.classList.add('show');
 }
 
-function renderResultTable(tbodyId, rows) {
-  document.getElementById(tbodyId).innerHTML = rows.join('');
-}
+function renderResultTable(id, rows) { document.getElementById(id).innerHTML = rows.join(''); }
 
-// ── BOARD GAMES ───────────────────────────────────────
-(function buildBoard() {
+// ── BOARD GAMES ──────────────────────────────────────
+(function() {
   const tb = document.getElementById('boardBody');
-  PLAYERS.forEach((p, i) => {
-    tb.innerHTML += `<tr>
-      <td>${playerCell(p)}</td>
-      <td><input type="number" id="board_${i}" min="1" max="5" placeholder="1–5" oninput="liveBoard()"></td>
-    </tr>`;
+  PLAYERS.forEach((p,i) => {
+    tb.innerHTML += `<tr><td>${playerCell(p)}</td>
+      <td><input type="number" id="board_${i}" min="1" max="5" placeholder="1–5"></td></tr>`;
   });
 })();
-
-function liveBoard() {}
 
 function calcBoardGames() {
-  const positions = PLAYERS.map((_, i) => {
-    const v = parseInt(document.getElementById(`board_${i}`).value);
-    return isNaN(v) ? null : v;
-  });
-  if (positions.some(v => v === null)) { alert('Remplis toutes les positions !'); return; }
-
-  const sorted = [...positions.keys()].sort((a, b) => positions[a] - positions[b]);
-  // handle ties: same position → same rank
+  const positions = PLAYERS.map((_,i) => { const v=parseInt(document.getElementById(`board_${i}`).value); return isNaN(v)?null:v; });
+  if (positions.some(v=>v===null)) { alert('Remplis toutes les positions !'); return; }
+  const sorted = [...positions.keys()].sort((a,b) => positions[a]-positions[b]);
   const pts = new Array(N).fill(0);
-  sorted.forEach((pi, rank) => pts[pi] = RANK_PTS[rank]);
-
-  eventPts.board = pts;
-  updateGlobal();
-
-  const rb = document.getElementById('boardResultBody');
-  const rows = [...positions.keys()]
-    .sort((a, b) => positions[a] - positions[b])
-    .map(pi => `<tr class="result-row">
-      <td>${playerCell(PLAYERS[pi])}</td>
-      <td>${positions[pi]}</td>
-      <td><span class="pts-chip ${pts[pi] === 5 ? 'winner' : ''}">${pts[pi]} pts</span></td>
-    </tr>`);
-  renderResultTable('boardResultBody', rows);
-  document.getElementById('boardResult').style.display = '';
+  sorted.forEach((pi,rank) => pts[pi] = RANK_PTS[rank]);
+  eventPts.board = pts; updateGlobal();
+  renderResultTable('boardResultBody', [...positions.keys()].sort((a,b)=>positions[a]-positions[b]).map(pi =>
+    `<tr class="result-row"><td>${playerCell(PLAYERS[pi])}</td><td>${positions[pi]}</td>
+    <td><span class="pts-chip ${pts[pi]===5?'winner':''}">${pts[pi]} pts</span></td></tr>`));
+  document.getElementById('boardResult').style.display='';
 }
 
-// ── COOKING ──────────────────────────────────────────
-(function buildCooking() {
-  let html = '<table><thead><tr><th>Juré</th>';
-  PLAYERS.forEach(p => html += `<th colspan="2">${p.emoji} ${p.name}</th>`);
-  html += '</tr><tr><th></th>';
-  PLAYERS.forEach(() => html += '<th style="font-size:0.7rem;color:var(--muted)">Goût</th><th style="font-size:0.7rem;color:var(--muted)">Présen.</th>');
-  html += '</tr></thead><tbody>';
+// ── COOKING (tabs by juré) ───────────────────────────
+const COOK_CRITERIA = ['Goût', 'Présentation'];
+
+(function() {
+  const tabsEl = document.getElementById('cookingTabs');
+  const panelsEl = document.getElementById('cookingPanels');
   PLAYERS.forEach((jury, ji) => {
-    html += `<tr><td>${playerCell(jury)}</td>`;
+    tabsEl.innerHTML += `<button class="jury-tab${ji===0?' active':''}" onclick="switchTab('cooking',${ji})" id="cookTab_${ji}">
+      ${tabAvatar(jury)} ${jury.name}</button>`;
+    let panelHTML = `<div class="jury-panel${ji===0?' active':''}" id="cookPanel_${ji}">
+      <div class="criteria-grid">`;
     PLAYERS.forEach((p, pi) => {
-      if (ji === pi) {
-        html += '<td colspan="2" style="text-align:center;color:var(--muted);font-size:1.2rem">—</td>';
-      } else {
-        html += `<td><input type="number" id="cook_g_${ji}_${pi}" min="0" max="5" step="0.5" placeholder="0–5"></td>
-                 <td><input type="number" id="cook_p_${ji}_${pi}" min="0" max="5" step="0.5" placeholder="0–5"></td>`;
-      }
+      if (ji===pi) return;
+      panelHTML += `<div style="margin-bottom:0.5rem">
+        <div style="font-size:0.72rem;color:var(--muted);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.4rem;display:flex;align-items:center;gap:6px">
+          ${avatarSVG(p,18)} ${p.name}
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem">
+          ${COOK_CRITERIA.map((c,ci) => `<div class="criteria-row">
+            <div class="criteria-label">${c} <span>/5</span></div>
+            <input type="number" id="cook_${ji}_${pi}_${ci}" min="0" max="5" step="0.5" placeholder="0–5" style="width:60px">
+          </div>`).join('')}
+        </div>
+      </div>`;
     });
-    html += '</tr>';
+    panelHTML += '</div></div>';
+    panelsEl.innerHTML += panelHTML;
   });
-  html += '</tbody></table>';
-  document.getElementById('cookingJuryTable').innerHTML = html;
 })();
 
-function calcCooking() {
-  const goûtSums = new Array(N).fill(0), goûtCounts = new Array(N).fill(0);
-  const presSums = new Array(N).fill(0), presCounts = new Array(N).fill(0);
-  let ok = true;
-  PLAYERS.forEach((_, ji) => {
-    PLAYERS.forEach((_, pi) => {
-      if (ji === pi) return;
-      const g = parseFloat(document.getElementById(`cook_g_${ji}_${pi}`)?.value);
-      const p2 = parseFloat(document.getElementById(`cook_p_${ji}_${pi}`)?.value);
-      if (isNaN(g) || isNaN(p2)) { ok = false; return; }
-      goûtSums[pi] += g; goûtCounts[pi]++;
-      presSums[pi] += p2; presCounts[pi]++;
-    });
-  });
-  if (!ok) { alert('Remplis toutes les notes !'); return; }
-
-  const moyGoût = goûtSums.map((s, i) => +(s / goûtCounts[i]).toFixed(2));
-  const moyPres = presSums.map((s, i) => +(s / presCounts[i]).toFixed(2));
-  const total = moyGoût.map((g, i) => +((g + moyPres[i]) / 2).toFixed(2));
-  const sorted = [...total.keys()].sort((a, b) => total[b] - total[a]);
-  const pts = new Array(N).fill(0);
-  sorted.forEach((pi, rank) => pts[pi] = RANK_PTS[rank]);
-
-  eventPts.cooking = pts;
-  updateGlobal();
-
-  const rows = sorted.map(pi => `<tr class="result-row">
-    <td>${playerCell(PLAYERS[pi])}</td>
-    <td>${moyGoût[pi]}</td>
-    <td>${moyPres[pi]}</td>
-    <td><strong>${total[pi]}</strong></td>
-    <td><span class="pts-chip ${pts[pi] === 5 ? 'winner' : ''}">${pts[pi]} pts</span></td>
-  </tr>`);
-  renderResultTable('cookingResultBody', rows);
-  document.getElementById('cookingResult').style.display = '';
+function switchTab(event, ji) {
+  document.querySelectorAll(`#${event}Tabs .jury-tab`).forEach((t,i) => t.classList.toggle('active', i===ji));
+  document.querySelectorAll(`#${event}Panels .jury-panel`).forEach((p,i) => p.classList.toggle('active', i===ji));
 }
 
-// ── DARTS ─────────────────────────────────────────────
-(function buildDarts() {
+function calcCooking() {
+  const sums = PLAYERS.map(() => COOK_CRITERIA.map(()=>0));
+  const counts = PLAYERS.map(() => COOK_CRITERIA.map(()=>0));
+  let ok = true;
+  PLAYERS.forEach((_,ji) => PLAYERS.forEach((_,pi) => {
+    if (ji===pi) return;
+    COOK_CRITERIA.forEach((_,ci) => {
+      const v = parseFloat(document.getElementById(`cook_${ji}_${pi}_${ci}`)?.value);
+      if (isNaN(v)) { ok=false; return; }
+      sums[pi][ci]+=v; counts[pi][ci]++;
+    });
+  }));
+  if (!ok) { alert('Remplis toutes les notes !'); return; }
+  const avgs = sums.map((c,pi) => c.map((s,ci) => +(s/counts[pi][ci]).toFixed(2)));
+  const totals = avgs.map(a => +((a[0]+a[1])/2).toFixed(2));
+  const sorted = [...totals.keys()].sort((a,b) => totals[b]-totals[a]);
+  const pts = new Array(N).fill(0);
+  sorted.forEach((pi,rank) => pts[pi]=RANK_PTS[rank]);
+  eventPts.cooking=pts; updateGlobal();
+  renderResultTable('cookingResultBody', sorted.map(pi =>
+    `<tr class="result-row"><td>${playerCell(PLAYERS[pi])}</td>
+    <td>${avgs[pi][0]}</td><td>${avgs[pi][1]}</td><td><strong>${totals[pi]}</strong></td>
+    <td><span class="pts-chip ${pts[pi]===5?'winner':''}">${pts[pi]} pts</span></td></tr>`));
+  document.getElementById('cookingResult').style.display='';
+}
+
+// ── DARTS ────────────────────────────────────────────
+(function() {
   const tb = document.getElementById('dartsBody');
-  PLAYERS.forEach((p, i) => {
-    tb.innerHTML += `<tr>
-      <td>${playerCell(p)}</td>
+  PLAYERS.forEach((p,i) => {
+    tb.innerHTML += `<tr><td>${playerCell(p)}</td>
       <td><input type="number" id="dart_${i}_0" min="0" max="150" placeholder="pts" oninput="liveDarts(${i})"></td>
       <td><input type="number" id="dart_${i}_1" min="0" max="150" placeholder="pts" oninput="liveDarts(${i})"></td>
       <td><input type="number" id="dart_${i}_2" min="0" max="150" placeholder="pts" oninput="liveDarts(${i})"></td>
-      <td id="dart_total_${i}" style="font-weight:600;color:var(--gold)">—</td>
-    </tr>`;
+      <td id="dart_total_${i}" style="font-weight:600;color:var(--gold)">—</td></tr>`;
   });
 })();
 
@@ -759,177 +711,138 @@ function liveDarts(i) {
 }
 
 function calcDarts() {
-  const totals = PLAYERS.map((_, i) => [0,1,2].reduce((s,r)=>s+(parseFloat(document.getElementById(`dart_${i}_${r}`)?.value)||0), 0));
-  const sorted = [...totals.keys()].sort((a, b) => totals[b] - totals[a]);
+  const totals = PLAYERS.map((_,i) => [0,1,2].reduce((s,r)=>s+(parseFloat(document.getElementById(`dart_${i}_${r}`)?.value)||0),0));
+  const sorted = [...totals.keys()].sort((a,b) => totals[b]-totals[a]);
   const pts = new Array(N).fill(0);
-  sorted.forEach((pi, rank) => pts[pi] = RANK_PTS[rank]);
-
-  eventPts.darts = pts;
-  updateGlobal();
-
-  const rows = sorted.map(pi => `<tr class="result-row">
-    <td>${playerCell(PLAYERS[pi])}</td>
-    <td>${totals[pi]}</td>
-    <td><span class="pts-chip ${pts[pi] === 5 ? 'winner' : ''}">${pts[pi]} pts</span></td>
-  </tr>`);
-  renderResultTable('dartsResultBody', rows);
-  document.getElementById('dartsResult').style.display = '';
+  sorted.forEach((pi,rank) => pts[pi]=RANK_PTS[rank]);
+  eventPts.darts=pts; updateGlobal();
+  renderResultTable('dartsResultBody', sorted.map(pi =>
+    `<tr class="result-row"><td>${playerCell(PLAYERS[pi])}</td><td>${totals[pi]}</td>
+    <td><span class="pts-chip ${pts[pi]===5?'winner':''}">${pts[pi]} pts</span></td></tr>`));
+  document.getElementById('dartsResult').style.display='';
 }
 
-// ── PING PONG ─────────────────────────────────────────
+// ── PING PONG ────────────────────────────────────────
 const ppMatches = [];
-(function buildPP() {
-  let html = '';
-  let mi = 0;
-  for (let a = 0; a < N; a++) {
-    for (let b = a + 1; b < N; b++) {
-      ppMatches.push([a, b]);
-      html += `<div class="match-row">
-        <div class="match-player">${PLAYERS[a].emoji} ${PLAYERS[a].name}</div>
-        <div class="match-score">
-          <input type="number" id="pp_${mi}_a" min="0" max="99" placeholder="0">
-          <span class="match-vs">VS</span>
-          <input type="number" id="pp_${mi}_b" min="0" max="99" placeholder="0">
-        </div>
-        <div class="match-player right">${PLAYERS[b].name} ${PLAYERS[b].emoji}</div>
-        <div style="font-size:0.75rem;color:var(--muted);white-space:nowrap;min-width:60px;text-align:right" id="pp_winner_${mi}"></div>
-      </div>`;
-      mi++;
-    }
+(function() {
+  let html='', mi=0;
+  for (let a=0;a<N;a++) for (let b=a+1;b<N;b++) {
+    ppMatches.push([a,b]);
+    html+=`<div class="match-row">
+      <div class="match-player">${avatarSVG(PLAYERS[a],20)} ${PLAYERS[a].name}</div>
+      <div class="match-score">
+        <input type="number" id="pp_${mi}_a" min="0" max="99" placeholder="0">
+        <span class="match-vs">VS</span>
+        <input type="number" id="pp_${mi}_b" min="0" max="99" placeholder="0">
+      </div>
+      <div class="match-player right">${PLAYERS[b].name} ${avatarSVG(PLAYERS[b],20)}</div>
+      <div style="font-size:0.75rem;color:var(--green);min-width:60px;text-align:right" id="pp_winner_${mi}"></div>
+    </div>`;
+    mi++;
   }
   document.getElementById('ppMatches').innerHTML = html;
-  // live winner indicator
-  ppMatches.forEach((_, mi) => {
-    ['a','b'].forEach(side => {
-      document.getElementById(`pp_${mi}_${side}`)?.addEventListener('input', () => livePP(mi));
-    });
-  });
+  ppMatches.forEach((_,mi) => ['a','b'].forEach(s =>
+    document.getElementById(`pp_${mi}_${s}`)?.addEventListener('input', ()=>livePP(mi))));
 })();
 
 function livePP(mi) {
-  const sa = parseInt(document.getElementById(`pp_${mi}_a`)?.value);
-  const sb = parseInt(document.getElementById(`pp_${mi}_b`)?.value);
-  const el = document.getElementById(`pp_winner_${mi}`);
-  if (!isNaN(sa) && !isNaN(sb)) {
-    if (sa > sb) el.textContent = `✓ ${PLAYERS[ppMatches[mi][0]].name}`;
-    else if (sb > sa) el.textContent = `✓ ${PLAYERS[ppMatches[mi][1]].name}`;
-    else el.textContent = 'Égalité';
-    el.style.color = 'var(--green)';
+  const sa=parseInt(document.getElementById(`pp_${mi}_a`)?.value);
+  const sb=parseInt(document.getElementById(`pp_${mi}_b`)?.value);
+  const el=document.getElementById(`pp_winner_${mi}`);
+  if (!isNaN(sa)&&!isNaN(sb)) {
+    el.textContent = sa>sb ? `✓ ${PLAYERS[ppMatches[mi][0]].name}` : sb>sa ? `✓ ${PLAYERS[ppMatches[mi][1]].name}` : 'Égalité';
   }
 }
 
 function calcPingPong() {
-  const wins = new Array(N).fill(0), losses = new Array(N).fill(0), diff = new Array(N).fill(0);
-  let ok = true;
-  ppMatches.forEach(([a, b], mi) => {
-    const sa = parseInt(document.getElementById(`pp_${mi}_a`)?.value);
-    const sb = parseInt(document.getElementById(`pp_${mi}_b`)?.value);
-    if (isNaN(sa) || isNaN(sb)) { ok = false; return; }
-    diff[a] += sa - sb; diff[b] += sb - sa;
-    if (sa > sb) { wins[a]++; losses[b]++; }
-    else if (sb > sa) { wins[b]++; losses[a]++; }
-    else { wins[a] += 0.5; wins[b] += 0.5; }
+  const wins=new Array(N).fill(0), losses=new Array(N).fill(0), diff=new Array(N).fill(0);
+  let ok=true;
+  ppMatches.forEach(([a,b],mi) => {
+    const sa=parseInt(document.getElementById(`pp_${mi}_a`)?.value);
+    const sb=parseInt(document.getElementById(`pp_${mi}_b`)?.value);
+    if (isNaN(sa)||isNaN(sb)) { ok=false; return; }
+    diff[a]+=sa-sb; diff[b]+=sb-sa;
+    if (sa>sb) { wins[a]++; losses[b]++; } else if (sb>sa) { wins[b]++; losses[a]++; }
+    else { wins[a]+=0.5; wins[b]+=0.5; }
   });
   if (!ok) { alert('Remplis tous les scores !'); return; }
-
-  const sorted = [...wins.keys()].sort((a, b) => wins[b] - wins[a] || diff[b] - diff[a]);
-  const pts = new Array(N).fill(0);
-  sorted.forEach((pi, rank) => pts[pi] = RANK_PTS[rank]);
-
-  eventPts.pingpong = pts;
-  updateGlobal();
-
-  const rows = sorted.map(pi => `<tr class="result-row">
-    <td>${playerCell(PLAYERS[pi])}</td>
-    <td style="color:var(--green)">${wins[pi]}</td>
-    <td style="color:var(--red)">${losses[pi]}</td>
-    <td>${diff[pi] >= 0 ? '+' : ''}${diff[pi]}</td>
-    <td><span class="pts-chip ${pts[pi] === 5 ? 'winner' : ''}">${pts[pi]} pts</span></td>
-  </tr>`);
-  renderResultTable('ppResultBody', rows);
-  document.getElementById('ppResult').style.display = '';
+  const sorted=[...wins.keys()].sort((a,b)=>wins[b]-wins[a]||diff[b]-diff[a]);
+  const pts=new Array(N).fill(0);
+  sorted.forEach((pi,rank)=>pts[pi]=RANK_PTS[rank]);
+  eventPts.pingpong=pts; updateGlobal();
+  renderResultTable('ppResultBody', sorted.map(pi =>
+    `<tr class="result-row"><td>${playerCell(PLAYERS[pi])}</td>
+    <td style="color:var(--green)">${wins[pi]}</td><td style="color:var(--red)">${losses[pi]}</td>
+    <td>${diff[pi]>=0?'+':''}${diff[pi]}</td>
+    <td><span class="pts-chip ${pts[pi]===5?'winner':''}">${pts[pi]} pts</span></td></tr>`));
+  document.getElementById('ppResult').style.display='';
 }
 
-// ── LA PREZ ───────────────────────────────────────────
-const PREZ_CRITERIA = ['Originalité', 'Humour', 'Qualité', 'Aura'];
+// ── LA PREZ (tabs by juré) ───────────────────────────
+const PREZ_CRITERIA = ['Originalité & créativité','Humour & sens de la vanne','Qualité de la présentation','Aura'];
 
-(function buildPrez() {
-  let html = '<table><thead><tr><th>Juré</th>';
-  PLAYERS.forEach(p => html += `<th colspan="${PREZ_CRITERIA.length}">${p.emoji} ${p.name}</th>`);
-  html += '</tr><tr><th></th>';
-  PLAYERS.forEach(() => PREZ_CRITERIA.forEach(c => html += `<th style="font-size:0.65rem;color:var(--muted)">${c}</th>`));
-  html += '</tr></thead><tbody>';
-  PLAYERS.forEach((jury, ji) => {
-    html += `<tr><td>${playerCell(jury)}</td>`;
-    PLAYERS.forEach((p, pi) => {
-      if (ji === pi) {
-        html += `<td colspan="${PREZ_CRITERIA.length}" style="text-align:center;color:var(--muted);font-size:1.2rem">—</td>`;
-      } else {
-        PREZ_CRITERIA.forEach((_, ci) => {
-          html += `<td><input type="number" id="prez_${ji}_${pi}_${ci}" min="0" max="5" step="0.5" placeholder="0–5" style="width:52px"></td>`;
-        });
-      }
+(function() {
+  const tabsEl=document.getElementById('prezTabs');
+  const panelsEl=document.getElementById('prezPanels');
+  PLAYERS.forEach((jury,ji) => {
+    tabsEl.innerHTML += `<button class="jury-tab${ji===0?' active':''}" onclick="switchTab('prez',${ji})" id="prezTab_${ji}">
+      ${tabAvatar(jury)} ${jury.name}</button>`;
+    let panelHTML=`<div class="jury-panel${ji===0?' active':''}" id="prezPanel_${ji}"><div class="criteria-grid">`;
+    PLAYERS.forEach((p,pi) => {
+      if (ji===pi) return;
+      panelHTML += `<div style="margin-bottom:0.75rem">
+        <div style="font-size:0.72rem;color:var(--muted);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.5rem;display:flex;align-items:center;gap:6px">
+          ${avatarSVG(p,18)} ${p.name}
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem">
+          ${PREZ_CRITERIA.map((c,ci) => `<div class="criteria-row">
+            <div class="criteria-label">${c} <span>/5</span></div>
+            <input type="number" id="prez_${ji}_${pi}_${ci}" min="0" max="5" step="0.5" placeholder="0–5" style="width:58px">
+          </div>`).join('')}
+        </div>
+      </div>`;
     });
-    html += '</tr>';
+    panelHTML += '</div></div>';
+    panelsEl.innerHTML += panelHTML;
   });
-  html += '</tbody></table>';
-  document.getElementById('prezJuryTable').innerHTML = html;
 })();
 
 function calcPrez() {
-  const sums = PLAYERS.map(() => PREZ_CRITERIA.map(() => 0));
-  const counts = PLAYERS.map(() => PREZ_CRITERIA.map(() => 0));
-  let ok = true;
-  PLAYERS.forEach((_, ji) => {
-    PLAYERS.forEach((_, pi) => {
-      if (ji === pi) return;
-      PREZ_CRITERIA.forEach((_, ci) => {
-        const v = parseFloat(document.getElementById(`prez_${ji}_${pi}_${ci}`)?.value);
-        if (isNaN(v)) { ok = false; return; }
-        sums[pi][ci] += v; counts[pi][ci]++;
-      });
+  const sums=PLAYERS.map(()=>PREZ_CRITERIA.map(()=>0));
+  const counts=PLAYERS.map(()=>PREZ_CRITERIA.map(()=>0));
+  let ok=true;
+  PLAYERS.forEach((_,ji)=>PLAYERS.forEach((_,pi)=>{
+    if (ji===pi) return;
+    PREZ_CRITERIA.forEach((_,ci)=>{
+      const v=parseFloat(document.getElementById(`prez_${ji}_${pi}_${ci}`)?.value);
+      if (isNaN(v)){ok=false;return;}
+      sums[pi][ci]+=v; counts[pi][ci]++;
     });
-  });
-  if (!ok) { alert('Remplis toutes les notes !'); return; }
-
-  const avgs = sums.map((criteria, pi) => criteria.map((s, ci) => +(s / counts[pi][ci]).toFixed(2)));
-  const totals = avgs.map(a => +(a.reduce((s, v) => s + v, 0)).toFixed(2));
-  const sorted = [...totals.keys()].sort((a, b) => totals[b] - totals[a]);
-  const pts = new Array(N).fill(0);
-  sorted.forEach((pi, rank) => pts[pi] = RANK_PTS[rank]);
-
-  eventPts.prez = pts;
-  updateGlobal();
-
-  const rows = sorted.map(pi => `<tr class="result-row">
-    <td>${playerCell(PLAYERS[pi])}</td>
-    ${avgs[pi].map(v => `<td>${v}</td>`).join('')}
+  }));
+  if (!ok){alert('Remplis toutes les notes !');return;}
+  const avgs=sums.map((c,pi)=>c.map((s,ci)=>+(s/counts[pi][ci]).toFixed(2)));
+  const totals=avgs.map(a=>+(a.reduce((s,v)=>s+v,0)).toFixed(2));
+  const sorted=[...totals.keys()].sort((a,b)=>totals[b]-totals[a]);
+  const pts=new Array(N).fill(0);
+  sorted.forEach((pi,rank)=>pts[pi]=RANK_PTS[rank]);
+  eventPts.prez=pts; updateGlobal();
+  renderResultTable('prezResultBody', sorted.map(pi =>
+    `<tr class="result-row"><td>${playerCell(PLAYERS[pi])}</td>
+    ${avgs[pi].map(v=>`<td>${v}</td>`).join('')}
     <td><strong>${totals[pi]}</strong></td>
-    <td><span class="pts-chip ${pts[pi] === 5 ? 'winner' : ''}">${pts[pi]} pts</span></td>
-  </tr>`);
-  renderResultTable('prezResultBody', rows);
-  document.getElementById('prezResult').style.display = '';
+    <td><span class="pts-chip ${pts[pi]===5?'winner':''}">${pts[pi]} pts</span></td></tr>`));
+  document.getElementById('prezResult').style.display='';
 }
 
-// ── NAV ACTIVE ────────────────────────────────────────
-const sections = ['global','board-games','cooking','darts','pingpong','prez'];
-window.addEventListener('scroll', () => {
-  let cur = sections[0];
-  sections.forEach(id => {
-    const el = document.getElementById(id);
-    if (el && window.scrollY >= el.offsetTop - 120) cur = id;
-  });
-  document.querySelectorAll('nav a').forEach(a => {
-    a.classList.toggle('active', a.getAttribute('href') === `#${cur}`);
-  });
+// ── NAV ACTIVE ───────────────────────────────────────
+const sections=['global','board-games','cooking','darts','pingpong','prez'];
+window.addEventListener('scroll',()=>{
+  let cur=sections[0];
+  sections.forEach(id=>{const el=document.getElementById(id);if(el&&window.scrollY>=el.offsetTop-120)cur=id;});
+  document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')===`#${cur}`));
 });
 
-// Init scoreboard
 updateGlobal();
 </script>
-</body>
-</html>
-
-    
 </body>
 </html>
