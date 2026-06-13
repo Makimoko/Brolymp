@@ -710,12 +710,14 @@ function checkComplete(totals, sorted) {
 function renderResultTable(id, rows) { document.getElementById(id).innerHTML = rows.join(''); }
 
 // ── BOARD GAMES ──────────────────────────────────────
+const BOARD_DEFAULTS = [1, 4, 5, 2, 3]; // Tayeb=1, Remy=4, Steven=5, Terry=2, Pierre=3
 (function() {
   const tb = document.getElementById('boardBody');
   PLAYERS.forEach((p,i) => {
     tb.innerHTML += `<tr><td>${playerCell(p)}</td>
-      <td><input type="number" id="board_${i}" min="1" max="5" placeholder="1–5"></td></tr>`;
+      <td><input type="number" id="board_${i}" min="1" max="5" value="${BOARD_DEFAULTS[i]}"></td></tr>`;
   });
+  calcBoardGames();
 })();
 
 function calcBoardGames() {
@@ -724,7 +726,7 @@ function calcBoardGames() {
   const sorted = [...positions.keys()].sort((a,b) => positions[a]-positions[b]);
   const pts = new Array(N).fill(0);
   sorted.forEach((pi,rank) => pts[pi] = RANK_PTS[rank]);
-  eventPts.board = pts; updateGlobal(); saveState();
+  eventPts.board = pts; updateGlobal();
   renderBoardResult();
 }
 function renderBoardResult() {
@@ -789,7 +791,7 @@ function calcCooking() {
   const sorted = [...totals.keys()].sort((a,b) => totals[b]-totals[a]);
   const pts = new Array(N).fill(0);
   sorted.forEach((pi,rank) => pts[pi]=RANK_PTS[rank]);
-  eventPts.cooking=pts; updateGlobal(); saveState();
+  eventPts.cooking=pts; updateGlobal();
   renderCookingResult();
 }
 function renderCookingResult() {
@@ -835,7 +837,7 @@ function calcDarts() {
   const sorted = [...totals.keys()].sort((a,b) => totals[b]-totals[a]);
   const pts = new Array(N).fill(0);
   sorted.forEach((pi,rank) => pts[pi]=RANK_PTS[rank]);
-  eventPts.darts=pts; updateGlobal(); saveState();
+  eventPts.darts=pts; updateGlobal();
   renderDartsResult();
 }
 function renderDartsResult() {
@@ -895,7 +897,7 @@ function calcPingPong() {
   const sorted=[...wins.keys()].sort((a,b)=>wins[b]-wins[a]||diff[b]-diff[a]);
   const pts=new Array(N).fill(0);
   sorted.forEach((pi,rank)=>pts[pi]=RANK_PTS[rank]);
-  eventPts.pingpong=pts; updateGlobal(); saveState();
+  eventPts.pingpong=pts; updateGlobal();
   renderPPResult();
 }
 function renderPPResult() {
@@ -965,7 +967,7 @@ function calcPrez() {
   const sorted=[...totals.keys()].sort((a,b)=>totals[b]-totals[a]);
   const pts=new Array(N).fill(0);
   sorted.forEach((pi,rank)=>pts[pi]=RANK_PTS[rank]);
-  eventPts.prez=pts; updateGlobal(); saveState();
+  eventPts.prez=pts; updateGlobal();
   renderPrezResult();
 }
 function renderPrezResult() {
@@ -1043,13 +1045,20 @@ function resetEvent(key) {
     document.getElementById('prezResult').style.display='none';
     document.getElementById('prezResultBody').innerHTML='';
   }
-  saveState();
   updateGlobal();
 }
 
-// ── INIT ─────────────────────────────────────────────
-startLiveSync();
-updateGlobal();
+// ── BOARD GAMES PRÉ-REMPLI ───────────────────────────
+(function() {
+  const positions = [1, 4, 5, 2, 3]; // Tayeb=1, Remy=4, Steven=5, Terry=2, Pierre=3
+  positions.forEach((v,i) => { const el=document.getElementById(`board_${i}`); if(el) el.value=v; });
+  const sorted = [...positions.keys()].sort((a,b) => positions[a]-positions[b]);
+  const pts = new Array(N).fill(0);
+  sorted.forEach((pi,rank) => pts[pi] = RANK_PTS[rank]);
+  eventPts.board = pts;
+  renderBoardResult();
+  updateGlobal();
+})();
 </script>
 </body>
 </html>
