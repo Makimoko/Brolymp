@@ -979,6 +979,31 @@ function resetEvent(key) {
   });
   calcCooking();
 })();
+
+// ── PING PONG PRÉ-REMPLI ─────────────────────────────
+// Classement voulu : Terry 1er, Pierre 2e, Steven 3e, Remy 4e, Tayeb 5e
+// Indices : Tayeb=0, Remy=1, Steven=2, Terry=3, Pierre=4
+// Ordre des matchs : 0v1,0v2,0v3,0v4, 1v2,1v3,1v4, 2v3,2v4, 3v4
+(function() {
+  // [scoreA, scoreB] pour chaque match → produit 4-3-2-1-0 victoires
+  const ppData = [
+    [9,11],  // Tayeb  vs Remy   → Remy gagne
+    [9,11],  // Tayeb  vs Steven → Steven gagne
+    [9,11],  // Tayeb  vs Terry  → Terry gagne
+    [9,11],  // Tayeb  vs Pierre → Pierre gagne
+    [9,11],  // Remy   vs Steven → Steven gagne
+    [9,11],  // Remy   vs Terry  → Terry gagne
+    [9,11],  // Remy   vs Pierre → Pierre gagne
+    [9,11],  // Steven vs Terry  → Terry gagne
+    [9,11],  // Steven vs Pierre → Pierre gagne
+    [11,9],  // Terry  vs Pierre → Terry gagne
+  ];
+  ppData.forEach(([va,vb],mi) => {
+    const a=document.getElementById(`pp_${mi}_a`), b=document.getElementById(`pp_${mi}_b`);
+    if(a) a.value=va; if(b) b.value=vb; livePP(mi);
+  });
+  calcPingPong();
+})();
 </script>
 </body>
 </html>
