@@ -536,7 +536,122 @@
   </div>
 </div>
 
-<script>
+<script type="module">
+// ── FIREBASE (Firestore) ─────────────────────────────
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, doc, setDoc, getDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey:            "AIzaSyDDejpl1jiEMcD36fDNYQ1NLDqOlRIdbaI",
+  authDomain:        "brolymp-86031.firebaseapp.com",
+  projectId:         "brolymp-86031",
+  storageBucket:     "brolymp-86031.firebasestorage.app",
+  messagingSenderId: "560515604965",
+  appId:             "1:560515604965:web:585df9d3cdc4f268cd0f0c"
+};
+const app = initializeApp(firebaseConfig);
+const db  = getFirestore(app);
+const STATE_DOC = doc(db, "brolymp", "state");
+
+// Sauvegarde tout l'état dans Firestore
+async function saveState() {
+  try {
+    const raw = {};
+    ['board','cooking','darts','pingpong','prez'].forEach(k => {
+      raw[k] = eventPts[k] ? JSON.stringify(eventPts[k]) : null;
+    });
+    // also save raw inputs
+    raw.boardInputs   = getBoardInputs();
+    raw.cookInputs    = getCookInputs();
+    raw.dartInputs    = getDartInputs();
+    raw.ppInputs      = getPPInputs();
+    raw.prezInputs    = getPrezInputs();
+    await setDoc(STATE_DOC, raw);
+  } catch(e) { console.warn('Firebase save error:', e); }
+}
+
+// Collecteurs d'inputs
+function getBoardInputs() {
+  return PLAYERS.map((_,i) => document.getElementById(`board_${i}`)?.value || '');
+}
+function getCookInputs() {
+  const out = {};
+  PLAYERS.forEach((_,ji) => PLAYERS.forEach((_,pi) => {
+    if(ji===pi) return;
+    [0,1].forEach(ci => {
+      const k=`${ji}_${pi}_${ci}`;
+      out[k] = document.getElementById(`cook_${k}`)?.value || '';
+    });
+  }));
+  return JSON.stringify(out);
+}
+function getDartInputs() {
+  return PLAYERS.map((_,i) => [0,1,2].map(r => document.getElementById(`dart_${i}_${r}`)?.value||''));
+}
+function getPPInputs() {
+  return ppMatches.map((_,mi) => [
+    document.getElementById(`pp_${mi}_a`)?.value||'',
+    document.getElementById(`pp_${mi}_b`)?.value||''
+  ]);
+}
+function getPrezInputs() {
+  const out = {};
+  PLAYERS.forEach((_,ji) => PLAYERS.forEach((_,pi) => {
+    if(ji===pi) return;
+    [0,1,2,3].forEach(ci => {
+      const k=`${ji}_${pi}_${ci}`;
+      out[k] = document.getElementById(`prez_${k}`)?.value || '';
+    });
+  }));
+  return JSON.stringify(out);
+}
+
+// Restaure tout l'état depuis Firestore
+function restoreState(data) {
+  if (!data) return;
+  ['board','cooking','darts','pingpong','prez'].forEach(k => {
+    eventPts[k] = data[k] ? JSON.parse(data[k]) : null;
+  });
+  // restore inputs
+  if (data.boardInputs) {
+    data.boardInputs.forEach((v,i) => { const el=document.getElementById(`board_${i}`); if(el) el.value=v; });
+  }
+  if (data.cookInputs) {
+    const ci = JSON.parse(data.cookInputs);
+    Object.entries(ci).forEach(([k,v]) => { const el=document.getElementById(`cook_${k}`); if(el) el.value=v; });
+  }
+  if (data.dartInputs) {
+    data.dartInputs.forEach((manches,i) => {
+      manches.forEach((v,r) => { const el=document.getElementById(`dart_${i}_${r}`); if(el) el.value=v; });
+      liveDarts(i);
+    });
+  }
+  if (data.ppInputs) {
+    data.ppInputs.forEach(([va,vb],mi) => {
+      const a=document.getElementById(`pp_${mi}_a`), b=document.getElementById(`pp_${mi}_b`);
+      if(a) a.value=va; if(b) b.value=vb; livePP(mi);
+    });
+  }
+  if (data.prezInputs) {
+    const pi2 = JSON.parse(data.prezInputs);
+    Object.entries(pi2).forEach(([k,v]) => { const el=document.getElementById(`prez_${k}`); if(el) el.value=v; });
+  }
+  // restore result tables
+  if (eventPts.board)    renderBoardResult();
+  if (eventPts.cooking)  renderCookingResult();
+  if (eventPts.darts)    renderDartsResult();
+  if (eventPts.pingpong) renderPPResult();
+  if (eventPts.prez)     renderPrezResult();
+  updateGlobal();
+}
+
+// Écoute les changements en temps réel → tous les visiteurs voient les màj
+function startLiveSync() {
+  onSnapshot(STATE_DOC, snap => {
+    if (snap.exists()) restoreState(snap.data());
+  });
+}
+
 // ── PLAYERS ──────────────────────────────────────────
 const PLAYERS = [
   { name: 'Tayeb',  sym: 'sym-tayeb'  },
@@ -609,9 +724,14 @@ function calcBoardGames() {
   const sorted = [...positions.keys()].sort((a,b) => positions[a]-positions[b]);
   const pts = new Array(N).fill(0);
   sorted.forEach((pi,rank) => pts[pi] = RANK_PTS[rank]);
-  eventPts.board = pts; updateGlobal();
+  eventPts.board = pts; updateGlobal(); saveState();
+  renderBoardResult();
+}
+function renderBoardResult() {
+  const pts = eventPts.board; if(!pts) return;
+  const positions = PLAYERS.map((_,i) => parseInt(document.getElementById(`board_${i}`)?.value)||0);
   renderResultTable('boardResultBody', [...positions.keys()].sort((a,b)=>positions[a]-positions[b]).map(pi =>
-    `<tr class="result-row"><td>${playerCell(PLAYERS[pi])}</td><td>${positions[pi]}</td>
+    `<tr class="result-row"><td>${playerCell(PLAYERS[pi])}</td><td>${positions[pi]||'—'}</td>
     <td><span class="pts-chip ${pts[pi]===5?'winner':''}">${pts[pi]} pts</span></td></tr>`));
   document.getElementById('boardResult').style.display='';
 }
@@ -669,10 +789,26 @@ function calcCooking() {
   const sorted = [...totals.keys()].sort((a,b) => totals[b]-totals[a]);
   const pts = new Array(N).fill(0);
   sorted.forEach((pi,rank) => pts[pi]=RANK_PTS[rank]);
-  eventPts.cooking=pts; updateGlobal();
+  eventPts.cooking=pts; updateGlobal(); saveState();
+  renderCookingResult();
+}
+function renderCookingResult() {
+  const pts=eventPts.cooking; if(!pts) return;
+  const sums=PLAYERS.map(()=>COOK_CRITERIA.map(()=>0));
+  const counts=PLAYERS.map(()=>COOK_CRITERIA.map(()=>0));
+  PLAYERS.forEach((_,ji)=>PLAYERS.forEach((_,pi)=>{
+    if(ji===pi) return;
+    COOK_CRITERIA.forEach((_,ci)=>{
+      const v=parseFloat(document.getElementById(`cook_${ji}_${pi}_${ci}`)?.value);
+      if(!isNaN(v)){sums[pi][ci]+=v;counts[pi][ci]++;}
+    });
+  }));
+  const avgs=sums.map((cr,pi)=>cr.map((s,ci)=>counts[pi][ci]?+(s/counts[pi][ci]).toFixed(2):0));
+  const totals2=avgs.map(a=>+((a[0]+a[1])/2).toFixed(2));
+  const sorted=[...totals2.keys()].sort((a,b)=>totals2[b]-totals2[a]);
   renderResultTable('cookingResultBody', sorted.map(pi =>
     `<tr class="result-row"><td>${playerCell(PLAYERS[pi])}</td>
-    <td>${avgs[pi][0]}</td><td>${avgs[pi][1]}</td><td><strong>${totals[pi]}</strong></td>
+    <td>${avgs[pi][0]}</td><td>${avgs[pi][1]}</td><td><strong>${totals2[pi]}</strong></td>
     <td><span class="pts-chip ${pts[pi]===5?'winner':''}">${pts[pi]} pts</span></td></tr>`));
   document.getElementById('cookingResult').style.display='';
 }
@@ -699,7 +835,13 @@ function calcDarts() {
   const sorted = [...totals.keys()].sort((a,b) => totals[b]-totals[a]);
   const pts = new Array(N).fill(0);
   sorted.forEach((pi,rank) => pts[pi]=RANK_PTS[rank]);
-  eventPts.darts=pts; updateGlobal();
+  eventPts.darts=pts; updateGlobal(); saveState();
+  renderDartsResult();
+}
+function renderDartsResult() {
+  const pts=eventPts.darts; if(!pts) return;
+  const totals=PLAYERS.map((_,i)=>[0,1,2].reduce((s,r)=>s+(parseFloat(document.getElementById(`dart_${i}_${r}`)?.value)||0),0));
+  const sorted=[...totals.keys()].sort((a,b)=>totals[b]-totals[a]);
   renderResultTable('dartsResultBody', sorted.map(pi =>
     `<tr class="result-row"><td>${playerCell(PLAYERS[pi])}</td><td>${totals[pi]}</td>
     <td><span class="pts-chip ${pts[pi]===5?'winner':''}">${pts[pi]} pts</span></td></tr>`));
@@ -753,11 +895,25 @@ function calcPingPong() {
   const sorted=[...wins.keys()].sort((a,b)=>wins[b]-wins[a]||diff[b]-diff[a]);
   const pts=new Array(N).fill(0);
   sorted.forEach((pi,rank)=>pts[pi]=RANK_PTS[rank]);
-  eventPts.pingpong=pts; updateGlobal();
+  eventPts.pingpong=pts; updateGlobal(); saveState();
+  renderPPResult();
+}
+function renderPPResult() {
+  const pts=eventPts.pingpong; if(!pts) return;
+  const wins2=new Array(N).fill(0),losses2=new Array(N).fill(0),diff2=new Array(N).fill(0);
+  ppMatches.forEach(([a,b],mi)=>{
+    const sa=parseInt(document.getElementById(`pp_${mi}_a`)?.value);
+    const sb=parseInt(document.getElementById(`pp_${mi}_b`)?.value);
+    if(isNaN(sa)||isNaN(sb)) return;
+    diff2[a]+=sa-sb; diff2[b]+=sb-sa;
+    if(sa>sb){wins2[a]++;losses2[b]++;}else if(sb>sa){wins2[b]++;losses2[a]++;}
+    else{wins2[a]+=0.5;wins2[b]+=0.5;}
+  });
+  const sorted=[...wins2.keys()].sort((a,b)=>wins2[b]-wins2[a]||diff2[b]-diff2[a]);
   renderResultTable('ppResultBody', sorted.map(pi =>
     `<tr class="result-row"><td>${playerCell(PLAYERS[pi])}</td>
-    <td style="color:var(--green)">${wins[pi]}</td><td style="color:var(--red)">${losses[pi]}</td>
-    <td>${diff[pi]>=0?'+':''}${diff[pi]}</td>
+    <td style="color:var(--green)">${wins2[pi]}</td><td style="color:var(--red)">${losses2[pi]}</td>
+    <td>${diff2[pi]>=0?'+':''}${diff2[pi]}</td>
     <td><span class="pts-chip ${pts[pi]===5?'winner':''}">${pts[pi]} pts</span></td></tr>`));
   document.getElementById('ppResult').style.display='';
 }
@@ -809,11 +965,27 @@ function calcPrez() {
   const sorted=[...totals.keys()].sort((a,b)=>totals[b]-totals[a]);
   const pts=new Array(N).fill(0);
   sorted.forEach((pi,rank)=>pts[pi]=RANK_PTS[rank]);
-  eventPts.prez=pts; updateGlobal();
+  eventPts.prez=pts; updateGlobal(); saveState();
+  renderPrezResult();
+}
+function renderPrezResult() {
+  const pts=eventPts.prez; if(!pts) return;
+  const sums2=PLAYERS.map(()=>PREZ_CRITERIA.map(()=>0));
+  const counts2=PLAYERS.map(()=>PREZ_CRITERIA.map(()=>0));
+  PLAYERS.forEach((_,ji)=>PLAYERS.forEach((_,pi)=>{
+    if(ji===pi) return;
+    PREZ_CRITERIA.forEach((_,ci)=>{
+      const v=parseFloat(document.getElementById(`prez_${ji}_${pi}_${ci}`)?.value);
+      if(!isNaN(v)){sums2[pi][ci]+=v;counts2[pi][ci]++;}
+    });
+  }));
+  const avgs2=sums2.map((cr,pi)=>cr.map((s,ci)=>counts2[pi][ci]?+(s/counts2[pi][ci]).toFixed(2):0));
+  const totals3=avgs2.map(a=>+(a.reduce((s,v)=>s+v,0)).toFixed(2));
+  const sorted=[...totals3.keys()].sort((a,b)=>totals3[b]-totals3[a]);
   renderResultTable('prezResultBody', sorted.map(pi =>
     `<tr class="result-row"><td>${playerCell(PLAYERS[pi])}</td>
-    ${avgs[pi].map(v=>`<td>${v}</td>`).join('')}
-    <td><strong>${totals[pi]}</strong></td>
+    ${avgs2[pi].map(v=>`<td>${v}</td>`).join('')}
+    <td><strong>${totals3[pi]}</strong></td>
     <td><span class="pts-chip ${pts[pi]===5?'winner':''}">${pts[pi]} pts</span></td></tr>`));
   document.getElementById('prezResult').style.display='';
 }
@@ -871,9 +1043,12 @@ function resetEvent(key) {
     document.getElementById('prezResult').style.display='none';
     document.getElementById('prezResultBody').innerHTML='';
   }
+  saveState();
   updateGlobal();
 }
 
+// ── INIT ─────────────────────────────────────────────
+startLiveSync();
 updateGlobal();
 </script>
 </body>
