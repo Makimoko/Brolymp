@@ -1004,6 +1004,25 @@ function resetEvent(key) {
   });
   calcPingPong();
 })();
+
+// ── FLÉCHETTES PRÉ-REMPLIES ──────────────────────────
+// Classement voulu : Steven 1er, Terry 2e, Tayeb 3e, Pierre 4e, Remy 5e
+// Indices : Tayeb=0, Remy=1, Steven=2, Terry=3, Pierre=4
+(function() {
+  // [manche1, manche2, manche3] → totaux décroissants
+  const dartData = {
+    2: [50,50,30],  // Steven → 130
+    3: [50,40,20],  // Terry  → 110
+    0: [40,30,20],  // Tayeb  → 90
+    4: [30,25,15],  // Pierre → 70
+    1: [20,20,10],  // Remy   → 50
+  };
+  Object.entries(dartData).forEach(([i, manches]) => {
+    manches.forEach((v,r) => { const el=document.getElementById(`dart_${i}_${r}`); if(el) el.value=v; });
+    liveDarts(Number(i));
+  });
+  calcDarts();
+})();
 </script>
 </body>
 </html>
