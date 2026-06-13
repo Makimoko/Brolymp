@@ -536,121 +536,7 @@
   </div>
 </div>
 
-<script type="module">
-// ── FIREBASE (Firestore) ─────────────────────────────
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, doc, setDoc, getDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey:            "AIzaSyDDejpl1jiEMcD36fDNYQ1NLDqOlRIdbaI",
-  authDomain:        "brolymp-86031.firebaseapp.com",
-  projectId:         "brolymp-86031",
-  storageBucket:     "brolymp-86031.firebasestorage.app",
-  messagingSenderId: "560515604965",
-  appId:             "1:560515604965:web:585df9d3cdc4f268cd0f0c"
-};
-const app = initializeApp(firebaseConfig);
-const db  = getFirestore(app);
-const STATE_DOC = doc(db, "brolymp", "state");
-
-// Sauvegarde tout l'état dans Firestore
-async function saveState() {
-  try {
-    const raw = {};
-    ['board','cooking','darts','pingpong','prez'].forEach(k => {
-      raw[k] = eventPts[k] ? JSON.stringify(eventPts[k]) : null;
-    });
-    // also save raw inputs
-    raw.boardInputs   = getBoardInputs();
-    raw.cookInputs    = getCookInputs();
-    raw.dartInputs    = getDartInputs();
-    raw.ppInputs      = getPPInputs();
-    raw.prezInputs    = getPrezInputs();
-    await setDoc(STATE_DOC, raw);
-  } catch(e) { console.warn('Firebase save error:', e); }
-}
-
-// Collecteurs d'inputs
-function getBoardInputs() {
-  return PLAYERS.map((_,i) => document.getElementById(`board_${i}`)?.value || '');
-}
-function getCookInputs() {
-  const out = {};
-  PLAYERS.forEach((_,ji) => PLAYERS.forEach((_,pi) => {
-    if(ji===pi) return;
-    [0,1].forEach(ci => {
-      const k=`${ji}_${pi}_${ci}`;
-      out[k] = document.getElementById(`cook_${k}`)?.value || '';
-    });
-  }));
-  return JSON.stringify(out);
-}
-function getDartInputs() {
-  return PLAYERS.map((_,i) => [0,1,2].map(r => document.getElementById(`dart_${i}_${r}`)?.value||''));
-}
-function getPPInputs() {
-  return ppMatches.map((_,mi) => [
-    document.getElementById(`pp_${mi}_a`)?.value||'',
-    document.getElementById(`pp_${mi}_b`)?.value||''
-  ]);
-}
-function getPrezInputs() {
-  const out = {};
-  PLAYERS.forEach((_,ji) => PLAYERS.forEach((_,pi) => {
-    if(ji===pi) return;
-    [0,1,2,3].forEach(ci => {
-      const k=`${ji}_${pi}_${ci}`;
-      out[k] = document.getElementById(`prez_${k}`)?.value || '';
-    });
-  }));
-  return JSON.stringify(out);
-}
-
-// Restaure tout l'état depuis Firestore
-function restoreState(data) {
-  if (!data) return;
-  ['board','cooking','darts','pingpong','prez'].forEach(k => {
-    eventPts[k] = data[k] ? JSON.parse(data[k]) : null;
-  });
-  // restore inputs
-  if (data.boardInputs) {
-    data.boardInputs.forEach((v,i) => { const el=document.getElementById(`board_${i}`); if(el) el.value=v; });
-  }
-  if (data.cookInputs) {
-    const ci = JSON.parse(data.cookInputs);
-    Object.entries(ci).forEach(([k,v]) => { const el=document.getElementById(`cook_${k}`); if(el) el.value=v; });
-  }
-  if (data.dartInputs) {
-    data.dartInputs.forEach((manches,i) => {
-      manches.forEach((v,r) => { const el=document.getElementById(`dart_${i}_${r}`); if(el) el.value=v; });
-      liveDarts(i);
-    });
-  }
-  if (data.ppInputs) {
-    data.ppInputs.forEach(([va,vb],mi) => {
-      const a=document.getElementById(`pp_${mi}_a`), b=document.getElementById(`pp_${mi}_b`);
-      if(a) a.value=va; if(b) b.value=vb; livePP(mi);
-    });
-  }
-  if (data.prezInputs) {
-    const pi2 = JSON.parse(data.prezInputs);
-    Object.entries(pi2).forEach(([k,v]) => { const el=document.getElementById(`prez_${k}`); if(el) el.value=v; });
-  }
-  // restore result tables
-  if (eventPts.board)    renderBoardResult();
-  if (eventPts.cooking)  renderCookingResult();
-  if (eventPts.darts)    renderDartsResult();
-  if (eventPts.pingpong) renderPPResult();
-  if (eventPts.prez)     renderPrezResult();
-  updateGlobal();
-}
-
-// Écoute les changements en temps réel → tous les visiteurs voient les màj
-function startLiveSync() {
-  onSnapshot(STATE_DOC, snap => {
-    if (snap.exists()) restoreState(snap.data());
-  });
-}
+<script>
 
 // ── PLAYERS ──────────────────────────────────────────
 const PLAYERS = [
@@ -741,7 +627,7 @@ function renderBoardResult() {
 // ── COOKING (tabs by juré) ───────────────────────────
 const COOK_CRITERIA = ['Goût', 'Présentation'];
 
-const COOK_DEFAULTS = {"0_3_0": 3, "0_3_1": 3, "0_1_0": 2, "0_1_1": 2.5, "0_2_0": 3.5, "0_2_1": 4.5, "0_4_0": 1, "0_4_1": 3.5, "1_3_0": 2, "1_3_1": 3, "1_2_0": 2.5, "1_2_1": 3.75, "1_4_0": 0.5, "1_4_1": 3.5, "1_0_0": 1.5, "1_0_1": 3, "4_0_0": 2, "4_0_1": 3, "4_1_0": 2, "4_1_1": 3, "4_2_0": 3, "4_2_1": 3.5, "4_3_0": 4.5, "4_3_1": 5, "3_0_0": 1, "3_0_1": 4, "3_1_0": 1, "3_1_1": 4, "3_4_0": 1, "3_4_1": 4, "3_2_0": 2.75, "3_2_1": 4.5, "2_0_0": 5, "2_0_1": 4.5, "2_3_0": 3, "2_3_1": 3, "2_1_0": 4, "2_1_1": 3, "2_4_0": 3, "2_4_1": 4};
+const COOK_DEFAULTS = {"3_0_0": 3.0, "3_0_1": 3.0, "1_0_0": 2.0, "1_0_1": 2.5, "2_0_0": 3.5, "2_0_1": 4.5, "4_0_0": 1.0, "4_0_1": 3.5, "3_1_0": 2.0, "3_1_1": 3.0, "2_1_0": 2.5, "2_1_1": 3.75, "4_1_0": 0.5, "4_1_1": 3.5, "0_1_0": 1.5, "0_1_1": 3.0, "0_4_0": 2.0, "0_4_1": 3.0, "1_4_0": 2.0, "1_4_1": 3.0, "2_4_0": 3.0, "2_4_1": 3.5, "3_4_0": 4.5, "3_4_1": 5.0, "0_3_0": 1.0, "0_3_1": 4.0, "1_3_0": 1.0, "1_3_1": 4.0, "4_3_0": 1.0, "4_3_1": 4.0, "2_3_0": 2.75, "2_3_1": 4.5, "0_2_0": 5.0, "0_2_1": 4.5, "3_2_0": 3.0, "3_2_1": 3.0, "1_2_0": 4.0, "1_2_1": 3.0, "4_2_0": 3.0, "4_2_1": 4.0};
 
 (function() {
   const tabsEl = document.getElementById('cookingTabs');
@@ -1077,11 +963,11 @@ function resetEvent(key) {
 (function() {
   // cookData[juré][candidat] = [goût, présentation]
   const cookData = {
-    0: {1:[2.0,2.5], 2:[3.5,4.5], 3:[3.0,3.0], 4:[1.0,3.5]},   // Tayeb note
-    1: {0:[1.5,3.0], 2:[2.5,3.75], 3:[2.0,3.0], 4:[0.5,3.5]},  // Remy note
-    2: {0:[5.0,4.5], 1:[4.0,3.0], 3:[3.0,3.0], 4:[3.0,4.0]},   // Steven note
-    3: {0:[1.0,4.0], 1:[1.0,4.0], 2:[2.75,4.5], 4:[1.0,4.0]},  // Terry note
-    4: {0:[2.0,3.0], 1:[2.0,3.0], 2:[3.0,3.5], 3:[4.5,5.0]},   // Pierre note
+    0: {1:[1.5,3.0], 2:[5.0,4.5], 3:[1.0,4.0], 4:[2.0,3.0]},    // Tayeb note
+    1: {0:[2.0,2.5], 2:[4.0,3.0], 3:[1.0,4.0], 4:[2.0,3.0]},    // Remy note
+    2: {0:[3.5,4.5], 1:[2.5,3.75], 3:[2.75,4.5], 4:[3.0,3.5]},  // Steven note
+    3: {0:[3.0,3.0], 1:[2.0,3.0], 2:[3.0,3.0], 4:[4.5,5.0]},    // Terry note
+    4: {0:[1.0,3.5], 1:[0.5,3.5], 2:[3.0,4.0], 3:[1.0,4.0]},    // Pierre note
   };
   Object.entries(cookData).forEach(([ji, cands]) => {
     Object.entries(cands).forEach(([pi, vals]) => {
